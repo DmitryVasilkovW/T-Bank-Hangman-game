@@ -6,15 +6,16 @@ import java.util.Iterator;
 public class ExpectedWordIterator implements Iterator<Character> {
     private Word expectedWord;
     private int index = 0;
-    private final char[] wordAsArray = expectedWord.text().toCharArray();
+    private final char[] wordAsArray;
 
     public ExpectedWordIterator(Word expectedWord) {
         this.expectedWord = expectedWord;
+        this.wordAsArray = expectedWord.text().toCharArray();
     }
 
     @Override
     public boolean hasNext() {
-        return index < wordAsArray.length;
+        return index + 1 < wordAsArray.length;
     }
 
     @Override

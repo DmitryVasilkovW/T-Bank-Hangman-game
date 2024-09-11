@@ -2,8 +2,14 @@ package backend.academy.hangman.game.services.impl.hangman;
 
 import backend.academy.hangman.game.models.HangmanGameContext;
 import backend.academy.hangman.game.services.HangmanContextService;
+import backend.academy.hangman.game.services.HangmanStateService;
 
 public class HangmanContextServiceImpl implements HangmanContextService {
+    private final HangmanStateService hangmanStateService;
+
+    public HangmanContextServiceImpl(HangmanStateService hangmanStateService) {
+        this.hangmanStateService = hangmanStateService;
+    }
 
     @Override
     public HangmanGameContext decreaseAttempts(HangmanGameContext hangmanGameContext) {
@@ -12,7 +18,7 @@ public class HangmanContextServiceImpl implements HangmanContextService {
 
     @Override
     public HangmanGameContext addNewPartOfHangman(HangmanGameContext hangmanGameContext) {
-        return null;
+        return hangmanStateService.addPart(hangmanGameContext);
     }
 
     @Override

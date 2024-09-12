@@ -27,19 +27,20 @@ public class CLIHangmanGame {
 
         String categories = loader.getCategoriesAsString();
         printer.println("Choose a category: " + categories);
-        String category = reader.readSettingForWord();
+        String category = reader.readSettingForWordAsString();
 
         String difficulties = loader.getDifficultiesAsString(category);
         printer.println("Choose difficulty: " + difficulties);
-        String difficulty = reader.readSettingForWord();
+        String difficulty = reader.readSettingForWordAsString();
 
         printer.println("Choose the number of attempts from 1 to 26");
-        int attempts = reader.readAttempts();
+        int attempts = reader.readAttemptsAsString();
 
         try {
             String word = WordStorage.getRandomWord(category, difficulty);
             printer.println("The word has been chosen, let the game begin!\n");
             var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word);
+
             game.move();
         } catch (IOException e) {
             System.out.println(":(");

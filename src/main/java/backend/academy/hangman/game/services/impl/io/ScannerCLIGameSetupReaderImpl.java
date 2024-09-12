@@ -7,12 +7,7 @@ public class ScannerCLIGameSetupReaderImpl implements GameSetupReader {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public String readSettingForWord() {
+    public String readSettingForWordAsString() {
         return scanner.nextLine();
-    }
-
-    @Override
-    public int readAttempts() {
-        return scanner.nextInt();
     }
 }

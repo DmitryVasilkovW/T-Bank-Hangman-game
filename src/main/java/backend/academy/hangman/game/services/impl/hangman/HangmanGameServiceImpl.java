@@ -14,38 +14,45 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final InputReader reader;
     private final InputValidator inputValidator;
     private final HangmanContextService contextService;
-    private final StringRender stringRender;
     private final StringPrinter stringPrinter;
-    private final StringRender contextRender;
+    private final StringRender hangmanRender;
+    private final StringRender attemptsRender;
+    private final StringRender guessedLettersRender;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
         InputReader reader,
         InputValidator inputValidator,
         HangmanContextService contextService,
-        StringRender stringRender, StringPrinter stringPrinter, StringRender contextRender
+        StringPrinter stringPrinter,
+        StringRender stringRender,
+        StringRender contextRender,
+        StringRender guessedLettersRender
     ) {
-
         this.context = context;
         this.reader = reader;
         this.inputValidator = inputValidator;
         this.contextService = contextService;
-        this.stringRender = stringRender;
+        this.hangmanRender = stringRender;
         this.stringPrinter = stringPrinter;
-        this.contextRender = contextRender;
+        this.attemptsRender = contextRender;
+        this.guessedLettersRender = guessedLettersRender;
     }
 
     public void move() {
         while (contextService.hasAttempt(context)) {
             Input text = reader.read();
 
-            if (!inputValidator.hasInputAccepted(text, context.expectedWord())) {
+            if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
+                contextService.updateGuessedLetters(context, text);
+            } else {
                 context = contextService.decreaseAttempts(context);
                 context = contextService.addNewPartOfHangman(context);
             }
 
-            stringPrinter.print(stringRender.render(context));
-            stringPrinter.print(contextRender.render(context));
+            stringPrinter.println(hangmanRender.render(context));
+            stringPrinter.println(attemptsRender.render(context));
+            stringPrinter.println(guessedLettersRender.render(context));
         }
     }
 }

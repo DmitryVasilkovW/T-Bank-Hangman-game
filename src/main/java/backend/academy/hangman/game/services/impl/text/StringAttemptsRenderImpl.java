@@ -4,7 +4,7 @@ import backend.academy.hangman.game.models.HangmanGameContext;
 import backend.academy.hangman.game.models.Renderable;
 import backend.academy.hangman.game.services.StringRender;
 
-public class StringContextRenderImpl implements StringRender {
+public class StringAttemptsRenderImpl implements StringRender {
 
     @Override
     public String render(Renderable renderable) {
@@ -12,9 +12,7 @@ public class StringContextRenderImpl implements StringRender {
 
         sb
             .append("your attempts: ")
-            .append(((HangmanGameContext) renderable).attempts())
-            .append("\n")
-            .append(((HangmanGameContext) renderable).word().text());
+            .append(((HangmanGameContext) renderable).attempts());
 
         return sb.toString();
     }

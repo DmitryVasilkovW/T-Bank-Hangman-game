@@ -21,13 +21,13 @@ public class HangmanStateServiceImpl implements HangmanStateService {
         mistakes++;
         if (mistakes < 10) {
             hangmanState[mistakes - 1] = '=';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
+            return updateContext(context, hangmanState);
         } else if (mistakes < 16) {
             hangmanState[mistakes - 1] = '|';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
+            return updateContext(context, hangmanState);
         } else if (mistakes < 20) {
             hangmanState[mistakes - 1] = '-';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
+            return updateContext(context, hangmanState);
         }
 
         switch (mistakes) {
@@ -54,6 +54,10 @@ public class HangmanStateServiceImpl implements HangmanStateService {
                 break;
         }
 
-        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
+        return updateContext(context, hangmanState);
+    }
+
+    private HangmanGameContext updateContext(HangmanGameContext context, char[] hangmanState) {
+        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.guessedLetters());
     }
 }

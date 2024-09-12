@@ -3,14 +3,12 @@ package backend.academy.hangman.game.services.impl.text;
 import backend.academy.hangman.game.models.Word;
 import java.util.Iterator;
 
-public class ExpectedWordIterator implements Iterator<Character> {
-    private Word expectedWord;
-    private int index = 0;
+public class WordIterator implements Iterator<Character> {
+    private int index = -1;
     private final char[] wordAsArray;
 
-    public ExpectedWordIterator(Word expectedWord) {
-        this.expectedWord = expectedWord;
-        this.wordAsArray = expectedWord.text().toCharArray();
+    public WordIterator(Word expectedWord) {
+        this.wordAsArray = expectedWord.text();
     }
 
     @Override

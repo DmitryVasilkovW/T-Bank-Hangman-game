@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) {
         var hangman = new char[28];
         String expectedWord = "qwe";
-        int attempts = 6;
+        int attempts = 2;
         var word = new char[expectedWord.toString().length()];
 
         for (int i = 0; i < 28; i++) {

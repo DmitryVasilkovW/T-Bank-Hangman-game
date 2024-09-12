@@ -9,14 +9,24 @@ public class GuessedLettersServiceImlp implements GuessedLettersService {
     @Override
     public Word updateWord(Word word, Input input) {
         var newWord = new char[word.text().length];
+        var iterator = new WordIterator(word);
+        int i = 0;
 
-        for (int i = 0; i < word.text().length; i++) {
-            if (word.text()[i] != '\0') {
-                newWord[i] = word.text()[i];
+        while (iterator.hasNext()) {
+            char letter = iterator.next();
+
+            if (letter != '\0' || letter == input.input()) {
+                newWord[i] = letter;
+
+                if (letter == input.input()) {
+                    break;
+                }
             } else {
                 newWord[i] = input.input();
                 break;
             }
+
+            i++;
         }
 
         return new Word(newWord);

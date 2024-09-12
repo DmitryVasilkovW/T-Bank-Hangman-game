@@ -40,11 +40,14 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     }
 
     public void move() {
-        while (contextService.hasAttempt(context)) {
+        boolean isWordGuessed = false;
+
+        while (contextService.hasAttempt(context) && !isWordGuessed) {
             Input text = reader.read();
 
             if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
-                contextService.updateGuessedLetters(context, text);
+                context = contextService.updateGuessedLetters(context, text);
+                isWordGuessed = contextService.isWordGuessed(context);
             } else {
                 context = contextService.decreaseAttempts(context);
                 context = contextService.addNewPartOfHangman(context);

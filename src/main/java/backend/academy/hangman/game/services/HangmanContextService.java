@@ -8,4 +8,5 @@ public interface HangmanContextService {
     HangmanGameContext addNewPartOfHangman(HangmanGameContext hangmanGameContext);
     HangmanGameContext updateGuessedLetters(HangmanGameContext hangmanGameContext, Input input);
     boolean hasAttempt(HangmanGameContext hangmanGameContext);
+    boolean isWordGuessed(HangmanGameContext hangmanGameContext);
 }

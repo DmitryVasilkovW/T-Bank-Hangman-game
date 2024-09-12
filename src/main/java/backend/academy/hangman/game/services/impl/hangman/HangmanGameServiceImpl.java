@@ -16,13 +16,14 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final HangmanContextService contextService;
     private final StringRender stringRender;
     private final StringPrinter stringPrinter;
+    private final StringRender contextRender;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
         InputReader reader,
         InputValidator inputValidator,
         HangmanContextService contextService,
-        StringRender stringRender, StringPrinter stringPrinter
+        StringRender stringRender, StringPrinter stringPrinter, StringRender contextRender
     ) {
 
         this.context = context;
@@ -31,6 +32,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         this.contextService = contextService;
         this.stringRender = stringRender;
         this.stringPrinter = stringPrinter;
+        this.contextRender = contextRender;
     }
 
     public void move() {
@@ -40,9 +42,10 @@ public class HangmanGameServiceImpl implements HangmanGameService {
             if (!inputValidator.hasInputAccepted(text, context.expectedWord())) {
                 context = contextService.decreaseAttempts(context);
                 context = contextService.addNewPartOfHangman(context);
-
-                stringPrinter.print(stringRender.render(context));
             }
+
+            stringPrinter.print(stringRender.render(context));
+            stringPrinter.print(contextRender.render(context));
         }
     }
 }

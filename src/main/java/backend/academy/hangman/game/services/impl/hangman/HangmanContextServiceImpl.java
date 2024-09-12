@@ -13,7 +13,7 @@ public class HangmanContextServiceImpl implements HangmanContextService {
 
     @Override
     public HangmanGameContext decreaseAttempts(HangmanGameContext hangmanGameContext) {
-        return new HangmanGameContext(hangmanGameContext.attempts() - 1, hangmanGameContext.expectedWord(), hangmanGameContext.hangman());
+        return new HangmanGameContext(hangmanGameContext.attempts() - 1, hangmanGameContext.expectedWord(), hangmanGameContext.hangman(), hangmanGameContext.word());
     }
 
     @Override

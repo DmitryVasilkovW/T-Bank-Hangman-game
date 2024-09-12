@@ -5,7 +5,15 @@ import backend.academy.hangman.game.models.HangmanGameContext;
 import backend.academy.hangman.game.services.HangmanStateService;
 
 public class HangmanStateServiceImpl implements HangmanStateService {
-    private int mistakes = 0;
+    private int mistakes;
+
+    public HangmanStateServiceImpl(int mistakes) {
+        this.mistakes = mistakes;
+    }
+
+    public HangmanStateServiceImpl() {
+        this.mistakes = 0;
+    }
 
     public HangmanGameContext addPart(HangmanGameContext context) {
         char[] hangmanState = context.hangman().hangman();
@@ -13,13 +21,13 @@ public class HangmanStateServiceImpl implements HangmanStateService {
         mistakes++;
         if (mistakes < 10) {
             hangmanState[mistakes - 1] = '=';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState));
+            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
         } else if (mistakes < 16) {
             hangmanState[mistakes - 1] = '|';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState));
+            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
         } else if (mistakes < 20) {
             hangmanState[mistakes - 1] = '-';
-            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState));
+            return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
         }
 
         switch (mistakes) {
@@ -46,6 +54,6 @@ public class HangmanStateServiceImpl implements HangmanStateService {
                 break;
         }
 
-        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState));
+        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.word());
     }
 }

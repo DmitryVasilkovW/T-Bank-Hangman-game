@@ -1,0 +1,10 @@
+cat
+dog
+rat
+bat
+fox
+pig
+cow
+ant
+bee
+owl

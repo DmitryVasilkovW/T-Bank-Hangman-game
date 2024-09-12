@@ -2,10 +2,10 @@ package backend.academy.hangman.game.services.impl.io;
 
 import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.models.Word;
-import backend.academy.hangman.game.services.InputValidator;
+import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.impl.text.WordIterator;
 
-public class InputValidatorImpl implements InputValidator {
+public class CharacterInputValidatorImpl implements CharacterInputValidator {
 
     @Override
     public boolean hasInputAccepted(Input input, Word expectedWord) {

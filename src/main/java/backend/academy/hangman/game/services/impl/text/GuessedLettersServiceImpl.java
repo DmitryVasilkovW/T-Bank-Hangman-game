@@ -4,7 +4,7 @@ import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.models.Word;
 import backend.academy.hangman.game.services.GuessedLettersService;
 
-public class GuessedLettersServiceImlp implements GuessedLettersService {
+public class GuessedLettersServiceImpl implements GuessedLettersService {
 
     @Override
     public Word updateWord(Word word, Input input) {

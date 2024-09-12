@@ -1,0 +1,10 @@
+tiger
+zebra
+rabbit
+monkey
+dolphin
+horse
+eagle
+panda
+sheep
+camel

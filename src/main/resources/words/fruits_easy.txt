@@ -1,0 +1,10 @@
+apple
+pear
+plum
+kiwi
+lime
+fig
+date
+grape
+peach
+melon

@@ -5,14 +5,14 @@ import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.services.HangmanContextService;
 import backend.academy.hangman.game.services.HangmanGameService;
 import backend.academy.hangman.game.services.InputReader;
-import backend.academy.hangman.game.services.InputValidator;
+import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.StringPrinter;
 import backend.academy.hangman.game.services.StringRender;
 
 public class HangmanGameServiceImpl implements HangmanGameService {
     private HangmanGameContext context;
     private final InputReader reader;
-    private final InputValidator inputValidator;
+    private final CharacterInputValidator inputValidator;
     private final HangmanContextService contextService;
     private final StringPrinter stringPrinter;
     private final StringRender hangmanRender;
@@ -22,7 +22,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     public HangmanGameServiceImpl(
         HangmanGameContext context,
         InputReader reader,
-        InputValidator inputValidator,
+        CharacterInputValidator inputValidator,
         HangmanContextService contextService,
         StringPrinter stringPrinter,
         StringRender stringRender,

@@ -41,6 +41,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
 
     public void move() {
         boolean isWordGuessed = false;
+        showContext();
 
         while (contextService.hasAttempt(context) && !isWordGuessed) {
             Input text = reader.read();
@@ -53,9 +54,13 @@ public class HangmanGameServiceImpl implements HangmanGameService {
                 context = contextService.addNewPartOfHangman(context);
             }
 
-            stringPrinter.println(hangmanRender.render(context));
-            stringPrinter.println(attemptsRender.render(context));
-            stringPrinter.println(guessedLettersRender.render(context));
+            showContext();
         }
+    }
+
+    private void showContext(){
+        stringPrinter.println(hangmanRender.render(context));
+        stringPrinter.println(attemptsRender.render(context));
+        stringPrinter.println(guessedLettersRender.render(context));
     }
 }

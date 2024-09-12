@@ -6,6 +6,7 @@ import backend.academy.hangman.game.myExceptions.DifficultyIsNotSetException;
 import backend.academy.hangman.game.myExceptions.IncorrectAttemptsException;
 import backend.academy.hangman.game.myExceptions.IncorrectCategoryException;
 import backend.academy.hangman.game.myExceptions.IncorrectDifficultyException;
+import backend.academy.hangman.game.services.HangmanGameSettingsInputValidator;
 import backend.academy.hangman.game.services.impl.hangman.CLIHangmanGameFactoryImpl;
 import backend.academy.hangman.game.services.impl.hangman.HangmanGameSettingsInputValidatorImpl;
 import backend.academy.hangman.game.services.impl.hangman.RandomSetterImpl;
@@ -18,24 +19,32 @@ import java.net.URISyntaxException;
 import java.util.Set;
 
 public class CLIHangmanGame {
+    private static final HangmanGameSettingsInputValidator validator = new HangmanGameSettingsInputValidatorImpl();
+    private static final CLISpringPrinterImpl printer = new CLISpringPrinterImpl();
+    private static final ScannerCLIGameSetupReaderImpl reader = new ScannerCLIGameSetupReaderImpl();
+    private static final RandomSetterImpl randomSetter = new RandomSetterImpl();
 
     public static void main(String[] args) {
-        var printer = new CLISpringPrinterImpl();
-        var reader = new ScannerCLIGameSetupReaderImpl();
-        var validator = new HangmanGameSettingsInputValidatorImpl();
-        var randomSetter = new RandomSetterImpl();
-        WordMetaLoader loader;
+        WordMetaLoader loader = tryToInitLoader();
+
+        assert loader != null;
+        String category = getCategory(loader);
+        String difficulty = getDifficulty(loader, category);
+        int attempts = getAttempts();
 
         try {
-            loader = new WordMetaLoader();
+            String word = WordStorage.getRandomWord(category, difficulty);
+            printer.println("The word has been chosen, let the game begin!\n");
+            printer.println("category is " + category + " of " + difficulty + " complexity ");
+            var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word);
+
+            game.move();
         } catch (IOException e) {
             System.out.println(":(");
-            return;
-        } catch (URISyntaxException e) {
-            System.out.println(":(");
-            return;
         }
+    }
 
+    private static String getCategory(WordMetaLoader loader) {
         String categories = loader.getCategoriesAsString();
         Set<String> setOfCategories = loader.getCategoriesAsSet();
         printer.println("Choose a category: " + categories);
@@ -49,6 +58,10 @@ public class CLIHangmanGame {
             category = randomSetter.getRandomCategory(setOfCategories);
         }
 
+        return category;
+    }
+
+    private static String getDifficulty(WordMetaLoader loader, String category) {
         String difficulties = loader.getDifficultiesAsString(category);
         Set<String> setOfDifficulties = loader.getDifficultiesAsSet(category);
         printer.println("Choose difficulty: " + difficulties);
@@ -62,6 +75,10 @@ public class CLIHangmanGame {
             difficulty = randomSetter.getRandomDifficulty(setOfDifficulties);
         }
 
+        return difficulty;
+    }
+
+    private static int getAttempts() {
         printer.println("Choose the number of attempts from 1 to 26");
         String stringAttempts = reader.readSettingForWordAsString();
         int attempts = 6;
@@ -75,15 +92,22 @@ public class CLIHangmanGame {
             attempts = randomSetter.getRandomAttempts();
         }
 
-        try {
-            String word = WordStorage.getRandomWord(category, difficulty);
-            printer.println("The word has been chosen, let the game begin!\n");
-            printer.println("category is " + category + " of " + difficulty + " complexity ");
-            var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word);
+        return attempts;
+    }
 
-            game.move();
+    private static WordMetaLoader tryToInitLoader() {
+        WordMetaLoader loader;
+
+        try {
+            loader = new WordMetaLoader();
         } catch (IOException e) {
             System.out.println(":(");
+            return null;
+        } catch (URISyntaxException e) {
+            System.out.println(":(");
+            return null;
         }
+
+        return loader;
     }
 }

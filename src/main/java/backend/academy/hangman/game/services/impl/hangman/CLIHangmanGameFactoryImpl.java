@@ -6,6 +6,7 @@ import backend.academy.hangman.game.services.impl.io.CLISpringPrinterImpl;
 import backend.academy.hangman.game.services.impl.io.CharacterInputValidatorImpl;
 import backend.academy.hangman.game.services.impl.io.ScannerCLIReaderImlp;
 import backend.academy.hangman.game.services.impl.text.GuessedLettersServiceImpl;
+import backend.academy.hangman.game.services.impl.text.InputLowerCaseConverterImpl;
 import backend.academy.hangman.game.services.impl.text.StringAttemptsRenderImpl;
 import backend.academy.hangman.game.services.impl.text.StringGuessedWordRenderImpl;
 import backend.academy.hangman.game.services.impl.text.StringHangmanRenderImpl;
@@ -30,7 +31,18 @@ public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
         var validator = new CharacterInputValidatorImpl();
         var stringContextRenderer = new StringAttemptsRenderImpl();
         var stringGuessedLettersRender = new StringGuessedWordRenderImpl();
+        var converter = new InputLowerCaseConverterImpl();
 
-        return new HangmanGameServiceImpl(hangmanContext, reader, validator, contextService, printer, render, stringContextRenderer, stringGuessedLettersRender);
+        return new HangmanGameServiceImpl(
+            hangmanContext,
+            reader,
+            validator,
+            contextService,
+            printer,
+            render,
+            stringContextRenderer,
+            stringGuessedLettersRender,
+            converter
+        );
     }
 }

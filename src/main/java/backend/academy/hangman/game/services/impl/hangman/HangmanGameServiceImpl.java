@@ -4,6 +4,7 @@ import backend.academy.hangman.game.models.HangmanGameContext;
 import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.services.HangmanContextService;
 import backend.academy.hangman.game.services.HangmanGameService;
+import backend.academy.hangman.game.services.InputConverter;
 import backend.academy.hangman.game.services.InputReader;
 import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.StringPrinter;
@@ -18,6 +19,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final StringRender hangmanRender;
     private final StringRender attemptsRender;
     private final StringRender guessedLettersRender;
+    private final InputConverter inputConverter;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
@@ -27,7 +29,8 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         StringPrinter stringPrinter,
         StringRender stringRender,
         StringRender contextRender,
-        StringRender guessedLettersRender
+        StringRender guessedLettersRender,
+        InputConverter inputConverter
     ) {
         this.context = context;
         this.reader = reader;
@@ -37,6 +40,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         this.stringPrinter = stringPrinter;
         this.attemptsRender = contextRender;
         this.guessedLettersRender = guessedLettersRender;
+        this.inputConverter = inputConverter;
     }
 
     public void move() {
@@ -44,7 +48,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         showContext();
 
         while (contextService.hasAttempt(context) && !isWordGuessed) {
-            Input text = reader.read();
+            Input text = inputConverter.convert(reader.read());
 
             if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
                 context = contextService.updateGuessedLetters(context, text);
@@ -56,11 +60,29 @@ public class HangmanGameServiceImpl implements HangmanGameService {
 
             showContext();
         }
+
+        showEndGameWords(isWordGuessed);
     }
 
     private void showContext(){
         stringPrinter.println(hangmanRender.render(context));
         stringPrinter.println(attemptsRender.render(context));
         stringPrinter.println(guessedLettersRender.render(context));
+    }
+
+    private void showEndGameWords(boolean isWordGuessed) {
+        if (isWordGuessed) {
+            showVictoryWords();
+        } else {
+            showDefeatWords();
+        }
+    }
+
+    private void showVictoryWords() {
+        stringPrinter.println("\nYay, you win!\n");
+    }
+
+    private void showDefeatWords() {
+        stringPrinter.println("\nYou lost :(\n");
     }
 }

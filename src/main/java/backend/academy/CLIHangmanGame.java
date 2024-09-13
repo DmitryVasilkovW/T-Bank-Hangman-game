@@ -12,6 +12,7 @@ import backend.academy.hangman.game.services.impl.hangman.HangmanGameSettingsInp
 import backend.academy.hangman.game.services.impl.hangman.RandomSetterImpl;
 import backend.academy.hangman.game.services.impl.io.CLISpringPrinterImpl;
 import backend.academy.hangman.game.services.impl.io.ScannerCLIGameSetupReaderImpl;
+import backend.academy.hangman.game.services.impl.text.LowerCaseStringConverterImpl;
 import backend.academy.hangman.game.services.impl.text.WordMetaLoader;
 import backend.academy.hangman.game.services.impl.text.WordStorage;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class CLIHangmanGame {
     private static final CLISpringPrinterImpl printer = new CLISpringPrinterImpl();
     private static final ScannerCLIGameSetupReaderImpl reader = new ScannerCLIGameSetupReaderImpl();
     private static final RandomSetterImpl randomSetter = new RandomSetterImpl();
+    private static final LowerCaseStringConverterImpl converter = new LowerCaseStringConverterImpl();
 
     public static void main(String[] args) {
         WordMetaLoader loader;
@@ -61,7 +63,7 @@ public class CLIHangmanGame {
 
         while (!isValid) {
             printer.println("Choose a category: " + categories);
-            category = reader.readSettingForWordAsString();
+            category = converter.convert(reader.readSettingForWordAsString());
 
             try {
                 validator.validateCategory(category, setOfCategories);
@@ -85,7 +87,7 @@ public class CLIHangmanGame {
 
         while (!isValid) {
             printer.println("Choose difficulty: " + difficulties);
-            difficulty = reader.readSettingForWordAsString();
+            difficulty = converter.convert(reader.readSettingForWordAsString());
 
             try {
                 validator.validateDifficulty(difficulty, setOfDifficulties);

@@ -5,7 +5,7 @@ import backend.academy.hangman.game.models.HangmanGameContext;
 import backend.academy.hangman.game.models.Word;
 import backend.academy.hangman.game.services.HangmanGameContextFactory;
 
-public class HangmanContextFactory implements HangmanGameContextFactory {
+public class HangmanContextFactoryImpl implements HangmanGameContextFactory {
 
     @Override
     public HangmanGameContext createHangmanGameContext(int attempts, String expectedWord) {

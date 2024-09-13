@@ -10,6 +10,8 @@ import backend.academy.hangman.game.services.impl.text.InputLowerCaseConverterIm
 import backend.academy.hangman.game.services.impl.text.StringAttemptsRenderImpl;
 import backend.academy.hangman.game.services.impl.text.StringGuessedWordRenderImpl;
 import backend.academy.hangman.game.services.impl.text.StringHangmanRenderImpl;
+import backend.academy.hangman.game.services.impl.text.StringInputConverterImpl;
+import backend.academy.hangman.game.services.impl.text.StringInputLengthValidatorImpl;
 
 public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
 
@@ -21,28 +23,32 @@ public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
             hangman[i] = ' ';
         }
 
-        var hangmanContext = new HangmanContextFactory().createHangmanGameContext(attempts, expectedWord);
+        var hangmanContext = new HangmanContextFactoryImpl().createHangmanGameContext(attempts, expectedWord);
         var hangmanStateService = new HangmanStateServiceImpl(26 - attempts);
         var guessedLettersService = new GuessedLettersServiceImpl();
         var contextService = new HangmanContextServiceImpl(hangmanStateService, guessedLettersService);
-        var render = new StringHangmanRenderImpl();
+        var stringHangmanRender = new StringHangmanRenderImpl();
         var reader = new ScannerCLIReaderImlp();
         var printer = new CLISpringPrinterImpl();
-        var validator = new CharacterInputValidatorImpl();
+        var characterInputValidator = new CharacterInputValidatorImpl();
         var stringContextRenderer = new StringAttemptsRenderImpl();
         var stringGuessedLettersRender = new StringGuessedWordRenderImpl();
-        var converter = new InputLowerCaseConverterImpl();
+        var lowerCaseConverter = new InputLowerCaseConverterImpl();
+        var stringConverter = new StringInputConverterImpl();
+        var lengthValidator = new StringInputLengthValidatorImpl();
 
         return new HangmanGameServiceImpl(
             hangmanContext,
             reader,
-            validator,
+            characterInputValidator,
             contextService,
             printer,
-            render,
+            stringHangmanRender,
             stringContextRenderer,
             stringGuessedLettersRender,
-            converter
+            lowerCaseConverter,
+            stringConverter,
+            lengthValidator
         );
     }
 }

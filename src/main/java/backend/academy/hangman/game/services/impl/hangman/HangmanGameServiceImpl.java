@@ -5,14 +5,16 @@ import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.services.HangmanContextService;
 import backend.academy.hangman.game.services.HangmanGameService;
 import backend.academy.hangman.game.services.InputConverter;
-import backend.academy.hangman.game.services.InputReader;
 import backend.academy.hangman.game.services.CharacterInputValidator;
+import backend.academy.hangman.game.services.StringInputConverter;
+import backend.academy.hangman.game.services.StringInputLengthValidator;
 import backend.academy.hangman.game.services.StringPrinter;
+import backend.academy.hangman.game.services.StringReader;
 import backend.academy.hangman.game.services.StringRender;
 
 public class HangmanGameServiceImpl implements HangmanGameService {
     private HangmanGameContext context;
-    private final InputReader reader;
+    private final StringReader reader;
     private final CharacterInputValidator inputValidator;
     private final HangmanContextService contextService;
     private final StringPrinter stringPrinter;
@@ -20,17 +22,21 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final StringRender attemptsRender;
     private final StringRender guessedLettersRender;
     private final InputConverter inputConverter;
+    private final StringInputConverter stringInputConverter;
+    private final StringInputLengthValidator stringInputLengthValidator;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
-        InputReader reader,
+        StringReader reader,
         CharacterInputValidator inputValidator,
         HangmanContextService contextService,
         StringPrinter stringPrinter,
         StringRender stringRender,
         StringRender contextRender,
         StringRender guessedLettersRender,
-        InputConverter inputConverter
+        InputConverter inputConverter,
+        StringInputConverter stringInputConverter,
+        StringInputLengthValidator stringInputLengthValidator
     ) {
         this.context = context;
         this.reader = reader;
@@ -41,14 +47,16 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         this.attemptsRender = contextRender;
         this.guessedLettersRender = guessedLettersRender;
         this.inputConverter = inputConverter;
+        this.stringInputConverter = stringInputConverter;
+        this.stringInputLengthValidator = stringInputLengthValidator;
     }
 
     public void move() {
         boolean isWordGuessed = false;
         showContext();
-
         while (contextService.hasAttempt(context) && !isWordGuessed) {
-            Input text = inputConverter.convert(reader.read());
+            String input = reader.read();
+            Input text = inputConverter.convert(getCorrectInput(input));
 
             if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
                 context = contextService.updateGuessedLetters(context, text);
@@ -84,5 +92,18 @@ public class HangmanGameServiceImpl implements HangmanGameService {
 
     private void showDefeatWords() {
         stringPrinter.println("\nYou lost :(\n");
+    }
+
+    private Input getCorrectInput(String input) {
+        boolean isCorrect = stringInputLengthValidator.isValid(input);
+
+        while (!isCorrect) {
+            stringPrinter.println("enter only one letter");
+            input = reader.read();
+
+            isCorrect = stringInputLengthValidator.isValid(input);
+        }
+
+        return stringInputConverter.convert(input);
     }
 }

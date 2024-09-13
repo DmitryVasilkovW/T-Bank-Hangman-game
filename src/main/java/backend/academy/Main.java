@@ -7,7 +7,8 @@ import lombok.experimental.UtilityClass;
 public class Main {
 
     public static void main(String[] args) {
-
+        var game = new CLIHangmanGameFactoryImpl().createHangmanGame(20, "eagle");
+        game.move();
     }
 }
 

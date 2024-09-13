@@ -11,15 +11,20 @@ public class GuessedLettersServiceImpl implements GuessedLettersService {
         var newWord = new char[word.text().length];
         var iterator = new WordIterator(word);
         int i = 0;
+        boolean isContained = false;
 
         while (iterator.hasNext()) {
             char letter = iterator.next();
+
+            if (letter == '\0' && isContained) {
+                break;
+            }
 
             if (letter != '\0' || letter == input.input()) {
                 newWord[i] = letter;
 
                 if (letter == input.input()) {
-                    break;
+                    isContained = true;
                 }
             } else {
                 newWord[i] = input.input();

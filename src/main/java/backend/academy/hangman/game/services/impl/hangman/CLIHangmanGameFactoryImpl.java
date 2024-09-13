@@ -15,14 +15,9 @@ public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
     @Override
     public HangmanGameService createHangmanGame(int attempts, String expectedWord) {
         var hangman = new char[28];
-        var word = new char[expectedWord.toString().length()];
 
         for (int i = 0; i < 28; i++) {
             hangman[i] = ' ';
-        }
-
-        for (int i = 0; i < word.length; i++) {
-            word[i] = '_';
         }
 
         var hangmanContext = new HangmanContextFactory().createHangmanGameContext(attempts, expectedWord);

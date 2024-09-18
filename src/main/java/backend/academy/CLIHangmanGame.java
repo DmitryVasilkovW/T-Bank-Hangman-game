@@ -45,9 +45,12 @@ public class CLIHangmanGame {
     private static void tryToStartGame(String category, String difficulty, int attempts) {
         try {
             String word = WordStorage.getRandomWord(category, difficulty);
+            String hint = WordStorage.getHintForWord(word, category, difficulty);
+
             printer.println("The word has been chosen, let the game begin!\n");
-            printer.println("Category is " + category + " of " + difficulty + " complexity ");
-            var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word);
+            printer.println("Category is " + category + " of " + difficulty + " complexity");
+            printer.println("Enter 1 to get hint");
+            var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word, hint);
 
             game.move();
         } catch (IOException e) {

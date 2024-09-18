@@ -1,5 +1,5 @@
 package backend.academy.hangman.game.services;
 
-public interface StringInputLengthValidator {
+public interface StringInputValidator {
     boolean isValid(String input);
 }

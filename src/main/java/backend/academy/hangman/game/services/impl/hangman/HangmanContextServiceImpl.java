@@ -36,11 +36,11 @@ public class HangmanContextServiceImpl implements HangmanContextService {
     }
 
     private HangmanGameContext updateContext(HangmanGameContext context, int attempts) {
-        return new HangmanGameContext(attempts, context.expectedWord(), context.hangman(), context.guessedLetters());
+        return new HangmanGameContext(attempts, context.expectedWord(), context.hangman(), context.guessedLetters(), context.hint());
     }
 
     private HangmanGameContext updateContext(HangmanGameContext context, Word guessLetters) {
-        return new HangmanGameContext(context.attempts(), context.expectedWord(), context.hangman(), guessLetters);
+        return new HangmanGameContext(context.attempts(), context.expectedWord(), context.hangman(), guessLetters, context.hint());
     }
 
     @Override

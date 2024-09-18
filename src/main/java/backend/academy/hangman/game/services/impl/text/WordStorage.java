@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,33 @@ public class WordStorage {
         String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
         List<String> wordList = readWordsFromFile(fileName);
         Random random = new Random();
+        String line = wordList.get(random.nextInt(wordList.size()));
+        return line.split(" - ")[0].trim();
+    }
+
+    public static String getRandomWordWithHint(String category, String difficulty) throws IOException {
+        String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
+        List<String> wordList = readWordsFromFile(fileName);
+        Random random = new Random();
         return wordList.get(random.nextInt(wordList.size()));
+    }
+
+    public static String getHintForWord(String word, String category, String difficulty) throws IOException {
+        String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
+        List<String> wordList = readWordsFromFile(fileName);
+
+        Optional<String> lineWithHint = wordList.stream()
+            .filter(line -> line.startsWith(word + " -"))
+            .findFirst();
+
+        if (lineWithHint.isPresent()) {
+            String[] parts = lineWithHint.get().split(" - ");
+            if (parts.length == 2) {
+                return parts[1].trim();
+            }
+        }
+
+        throw new IOException("Hint not found for word: " + word);
     }
 
     private static List<String> readWordsFromFile(String fileName) throws IOException {

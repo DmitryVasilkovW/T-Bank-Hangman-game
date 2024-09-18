@@ -8,7 +8,7 @@ import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.HangmanContextService;
 import backend.academy.hangman.game.services.InputConverter;
 import backend.academy.hangman.game.services.StringInputConverter;
-import backend.academy.hangman.game.services.StringInputLengthValidator;
+import backend.academy.hangman.game.services.StringInputValidator;
 import backend.academy.hangman.game.services.StringPrinter;
 import backend.academy.hangman.game.services.StringReader;
 import backend.academy.hangman.game.services.StringRender;
@@ -46,13 +46,19 @@ public class HangmanGameServiceTest {
     private StringRender guessedLettersRender;
 
     @Mock
+    private StringRender hintRender;
+
+    @Mock
     private InputConverter inputConverter;
 
     @Mock
     private StringInputConverter stringInputConverter;
 
     @Mock
-    private StringInputLengthValidator stringInputLengthValidator;
+    private StringInputValidator stringInputLengthValidator;
+
+    @Mock
+    private StringInputValidator stringHintValidator;
 
     @InjectMocks
     private HangmanGameServiceImpl hangmanGameService;
@@ -62,7 +68,7 @@ public class HangmanGameServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        context = new HangmanGameContext(5, makeWord("hello"), new Hangman(new char[28]), makeWord(""));
+        context = new HangmanGameContext(5, makeWord("hello"), new Hangman(new char[28]), makeWord(""), makeWord(""));
 
         hangmanGameService = new HangmanGameServiceImpl(
             context,
@@ -73,9 +79,11 @@ public class HangmanGameServiceTest {
             hangmanRender,
             attemptsRender,
             guessedLettersRender,
+            hintRender,
             inputConverter,
             stringInputConverter,
-            stringInputLengthValidator
+            stringInputLengthValidator,
+            stringHintValidator
         );
     }
 

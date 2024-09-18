@@ -7,7 +7,7 @@ import backend.academy.hangman.game.services.HangmanGameService;
 import backend.academy.hangman.game.services.InputConverter;
 import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.StringInputConverter;
-import backend.academy.hangman.game.services.StringInputLengthValidator;
+import backend.academy.hangman.game.services.StringInputValidator;
 import backend.academy.hangman.game.services.StringPrinter;
 import backend.academy.hangman.game.services.StringReader;
 import backend.academy.hangman.game.services.StringRender;
@@ -21,9 +21,13 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final StringRender hangmanRender;
     private final StringRender attemptsRender;
     private final StringRender guessedLettersRender;
+    private final StringRender hintRender;
     private final InputConverter inputConverter;
     private final StringInputConverter stringInputConverter;
-    private final StringInputLengthValidator stringInputLengthValidator;
+    private final StringInputValidator stringInputLengthValidator;
+    private final StringInputValidator stringHintInputValidator;
+    private boolean isWordGuessed = false;
+    private boolean whetherToShowHint = false;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
@@ -34,9 +38,11 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         StringRender stringRender,
         StringRender contextRender,
         StringRender guessedLettersRender,
+        StringRender hintRender,
         InputConverter inputConverter,
         StringInputConverter stringInputConverter,
-        StringInputLengthValidator stringInputLengthValidator
+        StringInputValidator stringInputLengthValidator,
+        StringInputValidator stringHintInputValidator
     ) {
         this.context = context;
         this.reader = reader;
@@ -46,16 +52,22 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         this.stringPrinter = stringPrinter;
         this.attemptsRender = contextRender;
         this.guessedLettersRender = guessedLettersRender;
+        this.hintRender = hintRender;
         this.inputConverter = inputConverter;
         this.stringInputConverter = stringInputConverter;
         this.stringInputLengthValidator = stringInputLengthValidator;
+        this.stringHintInputValidator = stringHintInputValidator;
     }
 
     public void move() {
-        boolean isWordGuessed = false;
-        showContext();
         while (contextService.hasAttempt(context) && !isWordGuessed) {
+            showContext();
+
             String input = reader.read();
+            if (checkIfHintShouldBeShown(input)) {
+                continue;
+            }
+
             Input text = inputConverter.convert(getCorrectInput(input));
 
             if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
@@ -65,20 +77,31 @@ public class HangmanGameServiceImpl implements HangmanGameService {
                 context = contextService.decreaseAttempts(context);
                 context = contextService.addNewPartOfHangman(context);
             }
-
-            showContext();
         }
 
-        showEndGameWords(isWordGuessed);
+        showEndGameWords();
+    }
+
+    private boolean checkIfHintShouldBeShown(String input) {
+        if (stringHintInputValidator.isValid(input)) {
+            whetherToShowHint = true;
+            return true;
+        }
+
+        return false;
     }
 
     private void showContext(){
+        if (whetherToShowHint) {
+            stringPrinter.println(hintRender.render(context));
+            stringPrinter.println("\n");
+        }
         stringPrinter.println(hangmanRender.render(context));
         stringPrinter.println(attemptsRender.render(context));
         stringPrinter.println(guessedLettersRender.render(context));
     }
 
-    private void showEndGameWords(boolean isWordGuessed) {
+    private void showEndGameWords() {
         if (isWordGuessed) {
             showVictoryWords();
         } else {

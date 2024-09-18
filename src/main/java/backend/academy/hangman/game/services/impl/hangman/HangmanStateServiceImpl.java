@@ -58,6 +58,6 @@ public class HangmanStateServiceImpl implements HangmanStateService {
     }
 
     private HangmanGameContext updateContext(HangmanGameContext context, char[] hangmanState) {
-        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.guessedLetters());
+        return new HangmanGameContext(context.attempts(), context.expectedWord(), new Hangman(hangmanState), context.guessedLetters(), context.hint());
     }
 }

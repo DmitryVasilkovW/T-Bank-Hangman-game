@@ -34,7 +34,7 @@ public class HangmanContextServiceTest {
 
         Word expectedWord = makeWord("test");
         Word guessedLetters = makeWord("te");
-        gameContext = new HangmanGameContext(5, expectedWord, new Hangman(new char[28]), guessedLetters);
+        gameContext = new HangmanGameContext(5, expectedWord, new Hangman(new char[28]), guessedLetters, makeWord(""));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class HangmanContextServiceTest {
 
     @Test
     void shouldReturnTrueWhenWordIsGuessed() {
-        var contextWithFullWord = new HangmanGameContext(5, makeWord("test"), new Hangman(new char[28]), makeWord("test"));
+        var contextWithFullWord = new HangmanGameContext(5, makeWord("test"), new Hangman(new char[28]), makeWord("test"), makeWord(""));
 
         boolean isWordGuessed = hangmanContextService.isWordGuessed(contextWithFullWord);
 
@@ -91,7 +91,7 @@ public class HangmanContextServiceTest {
 
     @Test
     void shouldReturnFalseIfNoAttemptsRemain() {
-        var contextWithNoAttempts = new HangmanGameContext(0, gameContext.expectedWord(), gameContext.hangman(), gameContext.guessedLetters());
+        var contextWithNoAttempts = new HangmanGameContext(0, gameContext.expectedWord(), gameContext.hangman(), gameContext.guessedLetters(), makeWord(""));
 
         boolean hasAttempt = hangmanContextService.hasAttempt(contextWithNoAttempts);
 

@@ -1,10 +1,10 @@
-watermelon
-pineapple
-pomegranate
-persimmon
-raspberry
-blackcurrant
-gooseberry
-mulberry
-lychee
-quince
+watermelon - a large green fruit with red, juicy flesh and black seeds
+pineapple - a tropical fruit with spiky skin and sweet, yellow flesh
+pomegranate - a fruit with thick skin, filled with juicy red seeds
+persimmon - a sweet, orange fruit with a smooth skin, often eaten soft
+raspberry - a small, red, sweet berry with many tiny seeds
+blackcurrant - a small, dark purple berry with a tart taste
+gooseberry - a small, round fruit, green or red, often tart
+mulberry - a sweet, dark-colored berry that grows on trees
+lychee - a small, round tropical fruit with rough skin and sweet, juicy flesh
+quince - a yellow, pear-like fruit that is hard and sour when raw

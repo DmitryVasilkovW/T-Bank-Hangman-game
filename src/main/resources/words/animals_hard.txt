@@ -1,10 +1,10 @@
-elephant
-crocodile
-kangaroo
-hippopotamus
-rhinoceros
-chimpanzee
-alligator
-porcupine
-armadillo
-orangutan
+elephant - the largest land animal with a trunk
+crocodile - a large reptile that lives in rivers, has sharp teeth
+kangaroo - a marsupial animal that hops and has a pouch
+hippopotamus - a large, heavy animal that lives in water, has a big mouth
+rhinoceros - a large animal with thick skin and one or two horns
+chimpanzee - a highly intelligent primate, closely related to humans
+alligator - a reptile similar to a crocodile, but with a broader snout
+porcupine - an animal with sharp quills for defense
+armadillo - a small mammal with a hard shell, rolls into a ball
+orangutan - a large, orange-colored primate that lives in trees

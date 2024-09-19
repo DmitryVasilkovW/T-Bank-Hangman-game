@@ -114,7 +114,7 @@ public class HangmanGameServiceTest {
             .isWordGuessed(context))
             .thenReturn(true);
 
-        hangmanGameService.move();
+        hangmanGameService.play();
 
         verify(stringPrinter).println("\nYay, you win!\n");
     }
@@ -147,7 +147,7 @@ public class HangmanGameServiceTest {
             .addNewPartOfHangman(any()))
             .thenReturn(context);
 
-        hangmanGameService.move();
+        hangmanGameService.play();
 
         verify(contextService).decreaseAttempts(context);
         verify(contextService).addNewPartOfHangman(context);
@@ -159,7 +159,7 @@ public class HangmanGameServiceTest {
             .hasAttempt(context))
             .thenReturn(false);
 
-        hangmanGameService.move();
+        hangmanGameService.play();
 
         verify(stringPrinter).println("\nYou lost :(\n");
     }
@@ -188,7 +188,7 @@ public class HangmanGameServiceTest {
             .hasInputAccepted(any(), any()))
             .thenReturn(true);
 
-        hangmanGameService.move();
+        hangmanGameService.play();
 
         verify(stringPrinter).println("enter only one letter");
 

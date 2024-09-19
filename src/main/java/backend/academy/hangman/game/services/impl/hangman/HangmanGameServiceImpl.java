@@ -28,6 +28,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
     private final StringInputValidator stringHintInputValidator;
     private boolean isWordGuessed = false;
     private boolean whetherToShowHint = false;
+    private String input;
 
     public HangmanGameServiceImpl(
         HangmanGameContext context,
@@ -59,16 +60,16 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         this.stringHintInputValidator = stringHintInputValidator;
     }
 
-    public void move() {
+    public void play() {
         while (contextService.hasAttempt(context) && !isWordGuessed) {
             showContext();
 
-            String input = reader.read();
-            if (checkIfHintShouldBeShown(input)) {
+            input = reader.read();
+            if (whetherContextWithHintShouldBeShownAgain()) {
                 continue;
             }
 
-            Input text = inputConverter.convert(getCorrectInput(input));
+            Input text = inputConverter.convert(getCorrectInput());
 
             if (inputValidator.hasInputAccepted(text, context.expectedWord())) {
                 context = contextService.updateGuessedLetters(context, text);
@@ -82,7 +83,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         showEndGameWords();
     }
 
-    private boolean checkIfHintShouldBeShown(String input) {
+    private boolean whetherContextWithHintShouldBeShownAgain() {
         if (stringHintInputValidator.isValid(input)) {
             whetherToShowHint = true;
             return true;
@@ -91,7 +92,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         return false;
     }
 
-    private void showContext(){
+    private void showContext() {
         if (whetherToShowHint) {
             stringPrinter.println(hintRender.render(context));
             stringPrinter.println("\n");
@@ -117,7 +118,7 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         stringPrinter.println("\nYou lost :(\n");
     }
 
-    private Input getCorrectInput(String input) {
+    private Input getCorrectInput() {
         boolean isCorrect = stringInputLengthValidator.isValid(input);
 
         while (!isCorrect) {

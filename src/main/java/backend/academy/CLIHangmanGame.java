@@ -11,7 +11,7 @@ import backend.academy.hangman.game.services.impl.hangman.CLIHangmanGameFactoryI
 import backend.academy.hangman.game.services.impl.hangman.HangmanGameSettingsInputValidatorImpl;
 import backend.academy.hangman.game.services.impl.hangman.RandomSetterImpl;
 import backend.academy.hangman.game.services.impl.io.CLISpringPrinterImpl;
-import backend.academy.hangman.game.services.impl.io.ScannerCLIGameSetupReaderImpl;
+import backend.academy.hangman.game.services.impl.io.ScannerCLIReaderImlp;
 import backend.academy.hangman.game.services.impl.text.StringLowerCaseConverterImpl;
 import backend.academy.hangman.game.services.impl.text.WordMetaLoader;
 import backend.academy.hangman.game.services.impl.text.WordStorage;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class CLIHangmanGame {
     private static final HangmanGameSettingsInputValidator validator = new HangmanGameSettingsInputValidatorImpl();
     private static final CLISpringPrinterImpl printer = new CLISpringPrinterImpl();
-    private static final ScannerCLIGameSetupReaderImpl reader = new ScannerCLIGameSetupReaderImpl();
+    private static final ScannerCLIReaderImlp reader = new ScannerCLIReaderImlp();
     private static final RandomSetterImpl randomSetter = new RandomSetterImpl();
     private static final StringLowerCaseConverterImpl converter = new StringLowerCaseConverterImpl();
 
@@ -31,7 +31,7 @@ public class CLIHangmanGame {
         try {
             loader = new WordMetaLoader();
         } catch (Exception e) {
-            System.out.println("Something went wrong");
+            printer.println("Something went wrong");
             return;
         }
 
@@ -52,9 +52,9 @@ public class CLIHangmanGame {
             printer.println("Enter 1 to get hint");
             var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word, hint);
 
-            game.move();
+            game.play();
         } catch (IOException e) {
-            System.out.println("Something went wrong");
+            printer.println("Something went wrong");
         }
     }
 
@@ -66,7 +66,7 @@ public class CLIHangmanGame {
 
         while (!isValid) {
             printer.println("Choose a category: " + categories);
-            category = converter.convert(reader.readSettingForWordAsString());
+            category = converter.convert(reader.read());
 
             try {
                 validator.validateCategory(category, setOfCategories);
@@ -90,7 +90,7 @@ public class CLIHangmanGame {
 
         while (!isValid) {
             printer.println("Choose difficulty: " + difficulties);
-            difficulty = converter.convert(reader.readSettingForWordAsString());
+            difficulty = converter.convert(reader.read());
 
             try {
                 validator.validateDifficulty(difficulty, setOfDifficulties);
@@ -112,7 +112,7 @@ public class CLIHangmanGame {
 
         while (!isValid) {
             printer.println("Choose the number of attempts from 1 to 26");
-            String stringAttempts = reader.readSettingForWordAsString();
+            String stringAttempts = reader.read();
 
             try {
                 validator.validateAttempts(stringAttempts);

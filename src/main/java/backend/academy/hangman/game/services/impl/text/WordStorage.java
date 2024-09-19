@@ -19,13 +19,6 @@ public class WordStorage {
         return line.split(" - ")[0].trim();
     }
 
-    public static String getRandomWordWithHint(String category, String difficulty) throws IOException {
-        String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
-        List<String> wordList = readWordsFromFile(fileName);
-        Random random = new Random();
-        return wordList.get(random.nextInt(wordList.size()));
-    }
-
     public static String getHintForWord(String word, String category, String difficulty) throws IOException {
         String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
         List<String> wordList = readWordsFromFile(fileName);

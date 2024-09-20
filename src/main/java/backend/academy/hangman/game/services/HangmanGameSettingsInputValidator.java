@@ -9,7 +9,13 @@ import backend.academy.hangman.game.myExceptions.IncorrectDifficultyException;
 import java.util.Set;
 
 public interface HangmanGameSettingsInputValidator {
-    void validateCategory(String category, Set<String> categories) throws IncorrectCategoryException, CategoryIsNotSetException;
-    void validateDifficulty(String difficulty, Set<String> difficulties) throws IncorrectDifficultyException, DifficultyIsNotSetException;
-    void validateAttempts(String attempts) throws IncorrectAttemptsException, AttemptsAreNotSetException;
+
+    void validateCategory(String category, Set<String> categories)
+            throws IncorrectCategoryException, CategoryIsNotSetException;
+
+    void validateDifficulty(String difficulty, Set<String> difficulties)
+            throws IncorrectDifficultyException, DifficultyIsNotSetException;
+
+    void validateAttempts(String attempts)
+            throws IncorrectAttemptsException, AttemptsAreNotSetException;
 }

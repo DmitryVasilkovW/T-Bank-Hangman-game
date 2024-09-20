@@ -6,12 +6,11 @@ import backend.academy.hangman.game.models.Input;
 import backend.academy.hangman.game.models.Word;
 import backend.academy.hangman.game.services.CharacterInputValidator;
 import backend.academy.hangman.game.services.HangmanContextService;
-import backend.academy.hangman.game.services.InputConverter;
-import backend.academy.hangman.game.services.StringInputConverter;
-import backend.academy.hangman.game.services.StringInputValidator;
+import backend.academy.hangman.game.services.HangmanGameInputConverter;
+import backend.academy.hangman.game.services.HangmanGameInputValidator;
+import backend.academy.hangman.game.services.StringHangmanGameContextRender;
 import backend.academy.hangman.game.services.StringPrinter;
 import backend.academy.hangman.game.services.StringReader;
-import backend.academy.hangman.game.services.StringRender;
 import backend.academy.hangman.game.services.impl.hangman.HangmanGameServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ public class HangmanGameServiceTest {
     private StringReader reader;
 
     @Mock
-    private CharacterInputValidator inputValidator;
+    private HangmanGameInputValidator inputValidator;
 
     @Mock
     private HangmanContextService contextService;
@@ -37,28 +36,10 @@ public class HangmanGameServiceTest {
     private StringPrinter stringPrinter;
 
     @Mock
-    private StringRender hangmanRender;
+    private StringHangmanGameContextRender render;
 
     @Mock
-    private StringRender attemptsRender;
-
-    @Mock
-    private StringRender guessedLettersRender;
-
-    @Mock
-    private StringRender hintRender;
-
-    @Mock
-    private InputConverter inputConverter;
-
-    @Mock
-    private StringInputConverter stringInputConverter;
-
-    @Mock
-    private StringInputValidator stringInputLengthValidator;
-
-    @Mock
-    private StringInputValidator stringHintValidator;
+    private HangmanGameInputConverter inputConverter;
 
     @InjectMocks
     private HangmanGameServiceImpl hangmanGameService;
@@ -71,48 +52,25 @@ public class HangmanGameServiceTest {
         context = new HangmanGameContext(5, makeWord("hello"), new Hangman(new char[28]), makeWord(""), makeWord(""));
 
         hangmanGameService = new HangmanGameServiceImpl(
-            context,
-            reader,
-            inputValidator,
-            contextService,
-            stringPrinter,
-            hangmanRender,
-            attemptsRender,
-            guessedLettersRender,
-            hintRender,
-            inputConverter,
-            stringInputConverter,
-            stringInputLengthValidator,
-            stringHintValidator
+                context,
+                reader,
+                contextService,
+                stringPrinter,
+                render,
+                inputConverter,
+                inputValidator
         );
     }
 
     @Test
     void testMoveWhenInputIsCorrectAndWordIsGuessed() {
-        when(contextService
-            .hasAttempt(context))
-            .thenReturn(true);
-        when(reader
-            .read())
-            .thenReturn("t");
-        when(stringInputLengthValidator
-            .isValid("t"))
-            .thenReturn(true);
-        when(stringInputConverter
-            .convert("t"))
-            .thenReturn(new Input('t'));
-        when(inputConverter
-            .convert(new Input('t')))
-            .thenReturn(new Input('t'));
-        when(inputValidator
-            .hasInputAccepted(any(), any()))
-            .thenReturn(true);
-        when(contextService
-            .updateGuessedLetters(any(), any()))
-            .thenReturn(context);
-        when(contextService
-            .isWordGuessed(context))
-            .thenReturn(true);
+        when(contextService.hasAttempt(context)).thenReturn(true);
+        when(reader.read()).thenReturn("t");
+        when(inputValidator.isValidLengthOfInput("t")).thenReturn(true);
+        when(inputConverter.convertToLowerCase(any(Input.class))).thenReturn(new Input('t'));
+        when(inputValidator.hasInputAccepted(any(), any())).thenReturn(true);
+        when(contextService.updateGuessedLetters(any(), any())).thenReturn(context);
+        when(contextService.isWordGuessed(context)).thenReturn(true);
 
         hangmanGameService.play();
 
@@ -121,31 +79,13 @@ public class HangmanGameServiceTest {
 
     @Test
     void testMoveWhenInputHasNotAcceptedAndAttemptsAreDecreased() {
-        when(contextService
-            .hasAttempt(context))
-            .thenReturn(true)
-            .thenReturn(false);
-        when(reader
-            .read())
-            .thenReturn("t");
-        when(stringInputLengthValidator
-            .isValid("t"))
-            .thenReturn(true);
-        when(stringInputConverter
-            .convert("t"))
-            .thenReturn(new Input('t'));
-        when(inputConverter
-            .convert(new Input('t')))
-            .thenReturn(new Input('t'));
-        when(inputValidator
-            .hasInputAccepted(any(), any()))
-            .thenReturn(false);
-        when(contextService
-            .decreaseAttempts(any()))
-            .thenReturn(context);
-        when(contextService
-            .addNewPartOfHangman(any()))
-            .thenReturn(context);
+        when(contextService.hasAttempt(context)).thenReturn(true).thenReturn(false);
+        when(reader.read()).thenReturn("t");
+        when(inputValidator.isValidLengthOfInput("t")).thenReturn(true);
+        when(inputConverter.convertToLowerCase(any(Input.class))).thenReturn(new Input('t'));
+        when(inputValidator.hasInputAccepted(any(), any())).thenReturn(false);
+        when(contextService.decreaseAttempts(any())).thenReturn(context);
+        when(contextService.addNewPartOfHangman(any())).thenReturn(context);
 
         hangmanGameService.play();
 
@@ -155,9 +95,7 @@ public class HangmanGameServiceTest {
 
     @Test
     void testMoveWhenNoAttemptsLeft() {
-        when(contextService
-            .hasAttempt(context))
-            .thenReturn(false);
+        when(contextService.hasAttempt(context)).thenReturn(false);
 
         hangmanGameService.play();
 
@@ -166,34 +104,17 @@ public class HangmanGameServiceTest {
 
     @Test
     void testMoveWhenInputIsInvalidLengthThenNoAttemptsDecreasedAndWarningDisplayed() {
-        when(contextService
-            .hasAttempt(context))
-            .thenReturn(true);
-        when(reader.read())
-            .thenReturn("miss")
-            .thenReturn("a");
-        when(stringInputLengthValidator
-            .isValid("miss"))
-            .thenReturn(false);
-        when(stringInputLengthValidator
-            .isValid("a"))
-            .thenReturn(true);
-        when(stringInputConverter
-            .convert("a"))
-            .thenReturn(new Input('a'));
-        when(inputConverter
-            .convert(new Input('a')))
-            .thenReturn(new Input('a'));
-        when(inputValidator
-            .hasInputAccepted(any(), any()))
-            .thenReturn(true);
+        when(contextService.hasAttempt(context)).thenReturn(true);
+        when(reader.read()).thenReturn("miss").thenReturn("a");
+        when(inputValidator.isValidLengthOfInput("miss")).thenReturn(false);
+        when(inputValidator.isValidLengthOfInput("a")).thenReturn(true);
+        when(inputConverter.convertToLowerCase(any(Input.class))).thenReturn(new Input('a'));
+        when(inputValidator.hasInputAccepted(any(), any())).thenReturn(true);
 
         hangmanGameService.play();
 
         verify(stringPrinter).println("enter only one letter");
-
         verify(contextService, never()).decreaseAttempts(context);
-
         verify(contextService).updateGuessedLetters(any(), any());
     }
 

@@ -9,12 +9,13 @@ import backend.academy.hangman.game.services.HangmanStateService;
 import backend.academy.hangman.game.services.impl.text.WordIterator;
 
 public class HangmanContextServiceImpl implements HangmanContextService {
+
     private final HangmanStateService hangmanStateService;
     private final GuessedLettersService guessedLettersService;
 
     public HangmanContextServiceImpl(
-        HangmanStateService hangmanStateService,
-        GuessedLettersService guessedLettersService
+            HangmanStateService hangmanStateService,
+            GuessedLettersService guessedLettersService
     ) {
         this.hangmanStateService = hangmanStateService;
         this.guessedLettersService = guessedLettersService;
@@ -32,15 +33,26 @@ public class HangmanContextServiceImpl implements HangmanContextService {
 
     @Override
     public HangmanGameContext updateGuessedLetters(HangmanGameContext hangmanGameContext, Input input) {
-        return updateContext(hangmanGameContext, guessedLettersService.updateWord(hangmanGameContext.guessedLetters(), input));
+        return updateContext(
+                hangmanGameContext,
+                guessedLettersService.updateWord(hangmanGameContext.guessedLetters(),
+                        input)
+        );
     }
 
     private HangmanGameContext updateContext(HangmanGameContext context, int attempts) {
-        return new HangmanGameContext(attempts, context.expectedWord(), context.hangman(), context.guessedLetters(), context.hint());
+        return new HangmanGameContext(
+                attempts,
+                context.expectedWord(),
+                context.hangman(),
+                context.guessedLetters(),
+                context.hint()
+        );
     }
 
     private HangmanGameContext updateContext(HangmanGameContext context, Word guessLetters) {
-        return new HangmanGameContext(context.attempts(), context.expectedWord(), context.hangman(), guessLetters, context.hint());
+        return new HangmanGameContext(context.attempts(), context.expectedWord(), context.hangman(), guessLetters,
+                context.hint());
     }
 
     @Override

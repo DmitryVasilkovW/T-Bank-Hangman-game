@@ -1,9 +1,11 @@
 package backend.academy.hangman.game.services.text;
 
+import backend.academy.hangman.game.myExceptions.HintNotFoundException;
 import backend.academy.hangman.game.services.impl.text.WordStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,27 +38,28 @@ public class WordStorageTest {
     }
 
     @Test
-    void testGetRandomWordWhenFileDoesNotExistThenThrowsIOException() {
+    void testGetRandomWordWhenFileDoesNotExistThenThrowsFileNotFoundException() {
         ClassLoader classLoader = mock(ClassLoader.class);
         when(classLoader.getResourceAsStream("words/category_difficulty.txt")).thenReturn(null);
 
-        assertThrows(IOException.class, () -> WordStorage.getRandomWord("cat", "difficulty"));
+        assertThrows(FileNotFoundException.class, () -> WordStorage.getRandomWord("cat", "difficulty"));
     }
 
     @Test
-    void testGetHintForWordWhenHintExistsThenReturnsHint() throws IOException {
+    void testGetHintForWordWhenHintExistsThenReturnsHint() throws IOException, HintNotFoundException {
         String hint = WordStorage.getHintForWord("cat", "category", "difficulty");
         assertThat(hint).isEqualTo("small animal");
     }
 
     @Test
-    void testGetHintForWordWhenHintDoesNotExistThenThrowsIOException() {
-        assertThrows(IOException.class, () -> WordStorage.getHintForWord("fox", "category", "difficulty"));
+    void testGetHintForWordWhenHintDoesNotExistThenThrowsHintNotFoundException() {
+        assertThrows(HintNotFoundException.class, () -> WordStorage.getHintForWord("fox", "category", "difficulty"));
     }
 
     @Test
-    void testGetHintForWordWhenFileDoesNotExistThenThrowsIOException() {
-        assertThrows(IOException.class, () -> WordStorage.getHintForWord("cat", "invalid_category", "difficulty"));
+    void testGetHintForWordWhenFileDoesNotExistThenThrowsFileNotFoundException() {
+        assertThrows(
+            FileNotFoundException.class, () -> WordStorage.getHintForWord("cat", "invalid_category", "difficulty"));
     }
 }
 

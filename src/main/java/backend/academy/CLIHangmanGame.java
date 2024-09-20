@@ -3,6 +3,7 @@ package backend.academy;
 import backend.academy.hangman.game.myExceptions.AttemptsAreNotSetException;
 import backend.academy.hangman.game.myExceptions.CategoryIsNotSetException;
 import backend.academy.hangman.game.myExceptions.DifficultyIsNotSetException;
+import backend.academy.hangman.game.myExceptions.HintNotFoundException;
 import backend.academy.hangman.game.myExceptions.IncorrectAttemptsException;
 import backend.academy.hangman.game.myExceptions.IncorrectCategoryException;
 import backend.academy.hangman.game.myExceptions.IncorrectDifficultyException;
@@ -53,7 +54,7 @@ public class CLIHangmanGame {
             var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word, hint);
 
             game.play();
-        } catch (IOException e) {
+        } catch (HintNotFoundException | IOException e) {
             printer.println("Something went wrong");
         }
     }
@@ -121,7 +122,7 @@ public class CLIHangmanGame {
             } catch (IncorrectAttemptsException e) {
                 printer.println(e.getMessage());
             } catch (AttemptsAreNotSetException e) {
-                attempts = randomSetter.getRandomAttempts();
+                attempts = randomSetter.getRandomAttemptsBetweenSixAndTwentySix();
                 isValid = true;
             }
         }

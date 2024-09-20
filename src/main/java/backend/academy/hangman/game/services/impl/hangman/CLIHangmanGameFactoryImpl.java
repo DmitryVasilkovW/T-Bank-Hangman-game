@@ -16,17 +16,12 @@ import backend.academy.hangman.game.services.impl.text.StringInputConverterImpl;
 import backend.academy.hangman.game.services.impl.text.StringInputLengthValidatorImpl;
 
 public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
+    private final int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN = 26;
 
     @Override
     public HangmanGameService createHangmanGame(int attempts, String expectedWord, String hint) {
-        var hangman = new char[28];
-
-        for (int i = 0; i < 28; i++) {
-            hangman[i] = ' ';
-        }
-
         var hangmanContext = new HangmanContextFactoryImpl().createHangmanGameContext(attempts, expectedWord, hint);
-        var hangmanStateService = new HangmanStateServiceImpl(26 - attempts);
+        var hangmanStateService = new HangmanStateServiceImpl(TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN - attempts);
         var guessedLettersService = new GuessedLettersServiceImpl();
         var contextService = new HangmanContextServiceImpl(hangmanStateService, guessedLettersService);
         var stringHangmanRender = new StringHangmanRenderImpl();

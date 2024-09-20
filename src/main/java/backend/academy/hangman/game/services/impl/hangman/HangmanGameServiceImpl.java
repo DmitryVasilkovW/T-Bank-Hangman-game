@@ -83,6 +83,19 @@ public class HangmanGameServiceImpl implements HangmanGameService {
         showEndGameWords();
     }
 
+    private Input getCorrectInput() {
+        boolean isCorrect = stringInputLengthValidator.isValid(input);
+
+        while (!isCorrect) {
+            stringPrinter.println("enter only one letter");
+            input = reader.read();
+
+            isCorrect = stringInputLengthValidator.isValid(input);
+        }
+
+        return stringInputConverter.convert(input);
+    }
+
     private boolean whetherContextWithHintShouldBeShownAgain() {
         if (stringHintInputValidator.isValid(input)) {
             whetherToShowHint = true;
@@ -116,18 +129,5 @@ public class HangmanGameServiceImpl implements HangmanGameService {
 
     private void showDefeatWords() {
         stringPrinter.println("\nYou lost :(\n");
-    }
-
-    private Input getCorrectInput() {
-        boolean isCorrect = stringInputLengthValidator.isValid(input);
-
-        while (!isCorrect) {
-            stringPrinter.println("enter only one letter");
-            input = reader.read();
-
-            isCorrect = stringInputLengthValidator.isValid(input);
-        }
-
-        return stringInputConverter.convert(input);
     }
 }

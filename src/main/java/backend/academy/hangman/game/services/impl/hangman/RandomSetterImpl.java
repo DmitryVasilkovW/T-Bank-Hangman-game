@@ -22,7 +22,7 @@ public class RandomSetterImpl implements RandomSetter {
     }
 
     @Override
-    public int getRandomAttempts() {
+    public int getRandomAttemptsBetweenSixAndTwentySix() {
         return random.nextInt(21) + 6;
     }
 }

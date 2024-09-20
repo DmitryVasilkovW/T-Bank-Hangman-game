@@ -1,6 +1,8 @@
 package backend.academy.hangman.game.services.impl.text;
 
+import backend.academy.hangman.game.myExceptions.HintNotFoundException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +21,8 @@ public class WordStorage {
         return line.split(" - ")[0].trim();
     }
 
-    public static String getHintForWord(String word, String category, String difficulty) throws IOException {
+    public static String getHintForWord(String word, String category, String difficulty)
+        throws IOException, HintNotFoundException {
         String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
         List<String> wordList = readWordsFromFile(fileName);
 
@@ -34,7 +37,7 @@ public class WordStorage {
             }
         }
 
-        throw new IOException("Hint not found for word: " + word);
+        throw new HintNotFoundException("Hint not found for word: " + word);
     }
 
     private static List<String> readWordsFromFile(String fileName) throws IOException {
@@ -42,7 +45,7 @@ public class WordStorage {
         InputStream inputStream = classLoader.getResourceAsStream("words/" + fileName);
 
         if (inputStream == null) {
-            throw new IOException("File not found: " + fileName);
+            throw new FileNotFoundException("File not found: " + fileName);
         }
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {

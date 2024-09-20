@@ -6,6 +6,6 @@ public class StringInputLengthValidatorImpl implements StringInputValidator {
 
     @Override
     public boolean isValid(String input) {
-        return !input.isEmpty() && input.length() <= 1;
+        return input.length() == 1;
     }
 }

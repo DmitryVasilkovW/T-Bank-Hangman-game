@@ -20,7 +20,11 @@ public class WordStorageTest {
     @BeforeEach
     void setUp() throws IOException {
         Files.createDirectories(TEST_DIRECTORY);
-        Files.write(TEST_DIRECTORY.resolve("category_difficulty.txt"), List.of("example", "test", "word"));
+        Files.write(TEST_DIRECTORY.resolve("category_difficulty.txt"), List.of(
+            "cat - small animal",
+            "dog - loyal animal",
+            "rat - sneaky animal"
+        ));
     }
 
     @Test
@@ -28,7 +32,7 @@ public class WordStorageTest {
         Files.createDirectories(TEST_DIRECTORY);
 
         String result = WordStorage.getRandomWord("category", "difficulty");
-        assertThat(List.of("example", "test", "word")).contains(result);
+        assertThat(List.of("cat", "dog", "rat")).contains(result);
     }
 
     @Test
@@ -38,4 +42,21 @@ public class WordStorageTest {
 
         assertThrows(IOException.class, () -> WordStorage.getRandomWord("cat", "difficulty"));
     }
+
+    @Test
+    void testGetHintForWordWhenHintExistsThenReturnsHint() throws IOException {
+        String hint = WordStorage.getHintForWord("cat", "category", "difficulty");
+        assertThat(hint).isEqualTo("small animal");
+    }
+
+    @Test
+    void testGetHintForWordWhenHintDoesNotExistThenThrowsIOException() {
+        assertThrows(IOException.class, () -> WordStorage.getHintForWord("fox", "category", "difficulty"));
+    }
+
+    @Test
+    void testGetHintForWordWhenFileDoesNotExistThenThrowsIOException() {
+        assertThrows(IOException.class, () -> WordStorage.getHintForWord("cat", "invalid_category", "difficulty"));
+    }
 }
+

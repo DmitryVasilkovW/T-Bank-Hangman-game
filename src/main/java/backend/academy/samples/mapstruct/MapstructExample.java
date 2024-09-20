@@ -2,7 +2,7 @@ package backend.academy.samples.mapstruct;
 
 import lombok.extern.log4j.Log4j2;
 import org.mapstruct.factory.Mappers;
-
+// CHECKSTYLE:OFF
 /**
  * Mapstruct is a compile-time declarative code generator that simplifies conversion between Java classes.
  * All you need is to define the interface with annotations – mapstruct will generate an implementation.

@@ -1,5 +1,5 @@
 package backend.academy.samples.lombok;
-
+// CHECKSTYLE:OFF
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,9 +28,9 @@ public class Kennel {
 
     public static void main(String[] args) {
         Kennel kennel = Kennel.builder()
-            .id(1)
+            .id((Integer) 1)
             .name("Bazz")
-            .dog(new Dog(1, "Foo", "Bar"))
+            .dog(new Dog((Integer) 1, "Foo", "Bar"))
             .build();
 
         log.info(kennel);

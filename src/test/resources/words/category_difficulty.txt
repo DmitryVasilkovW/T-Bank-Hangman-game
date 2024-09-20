@@ -1,0 +1,3 @@
+cat - small animal
+dog - loyal animal
+rat - sneaky animal

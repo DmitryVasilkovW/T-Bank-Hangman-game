@@ -1,0 +1,10 @@
+cat - a domestic animal that catches mice
+dog - a loyal friend of humans, barks
+rat - a small rodent, symbol of cunning
+bat - a flying mammal, uses echolocation
+fox - a clever animal with red fur
+pig - a domestic animal that says "oink"
+cow - produces milk, lives on a farm
+ant - a small insect, lives in colonies
+bee - an insect that produces honey
+owl - a nocturnal bird, symbol of wisdom

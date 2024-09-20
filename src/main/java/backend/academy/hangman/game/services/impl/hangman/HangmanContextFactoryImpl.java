@@ -7,7 +7,7 @@ import backend.academy.hangman.game.services.HangmanGameContextFactory;
 import java.util.Arrays;
 
 public class HangmanContextFactoryImpl implements HangmanGameContextFactory {
-    private final static int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN_WITH_NVISIBLE_PARTS = 28;
+    private final static int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN_WITH_INVISIBLE_PARTS = 28;
     private final static int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN = 26;
 
     @Override
@@ -16,7 +16,7 @@ public class HangmanContextFactoryImpl implements HangmanGameContextFactory {
         var word = new Word(expectedWord.toCharArray());
         var clue = new Word(hint.toCharArray());
         var guessedLetters = new Word(new char[expectedWord.length()]);
-        var hangman = new char[TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN_WITH_NVISIBLE_PARTS];
+        var hangman = new char[TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN_WITH_INVISIBLE_PARTS];
         var hangmanRec = new Hangman(hangman);
         var context = new HangmanGameContext(attempts, word, hangmanRec, guessedLetters, clue);
 

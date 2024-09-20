@@ -11,19 +11,26 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class WordStorage {
+public final class WordStorage {
+
+    private static final String FILE_EXTENSION = ".txt";
+    private static final String SEPARATOR_IN_FILENAME = "_";
+    private static final String SEPARATOR_IN_FILES = " - ";
+
+    private WordStorage() {
+    }
 
     public static String getRandomWord(String category, String difficulty) throws IOException {
-        String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
+        String fileName = category.toLowerCase() + SEPARATOR_IN_FILENAME + difficulty.toLowerCase() + FILE_EXTENSION;
         List<String> wordList = readWordsFromFile(fileName);
         Random random = new Random();
         String line = wordList.get(random.nextInt(wordList.size()));
-        return line.split(" - ")[0].trim();
+        return line.split(SEPARATOR_IN_FILES)[0].trim();
     }
 
     public static String getHintForWord(String word, String category, String difficulty)
         throws IOException, HintNotFoundException {
-        String fileName = category.toLowerCase() + "_" + difficulty.toLowerCase() + ".txt";
+        String fileName = category.toLowerCase() + SEPARATOR_IN_FILENAME + difficulty.toLowerCase() + FILE_EXTENSION;
         List<String> wordList = readWordsFromFile(fileName);
 
         Optional<String> lineWithHint = wordList.stream()
@@ -31,7 +38,7 @@ public class WordStorage {
             .findFirst();
 
         if (lineWithHint.isPresent()) {
-            String[] parts = lineWithHint.get().split(" - ");
+            String[] parts = lineWithHint.get().split(SEPARATOR_IN_FILES);
             if (parts.length == 2) {
                 return parts[1].trim();
             }

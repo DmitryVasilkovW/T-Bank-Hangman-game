@@ -11,9 +11,11 @@ import java.util.Set;
 
 public class HangmanGameSettingsInputValidatorImpl implements HangmanGameSettingsInputValidator {
 
+    private final static int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN = 26;
+
     @Override
     public void validateCategory(String category, Set<String> categories)
-        throws IncorrectCategoryException, CategoryIsNotSetException {
+            throws IncorrectCategoryException, CategoryIsNotSetException {
         if (category.isEmpty()) {
             throw new CategoryIsNotSetException();
         } else if (!categories.contains(category)) {
@@ -23,7 +25,7 @@ public class HangmanGameSettingsInputValidatorImpl implements HangmanGameSetting
 
     @Override
     public void validateDifficulty(String difficulty, Set<String> difficulties)
-        throws IncorrectDifficultyException, DifficultyIsNotSetException {
+            throws IncorrectDifficultyException, DifficultyIsNotSetException {
         if (difficulty.isEmpty()) {
             throw new DifficultyIsNotSetException();
         } else if (!difficulties.contains(difficulty)) {
@@ -33,7 +35,7 @@ public class HangmanGameSettingsInputValidatorImpl implements HangmanGameSetting
 
     @Override
     public void validateAttempts(String attempts)
-        throws IncorrectAttemptsException, AttemptsAreNotSetException {
+            throws IncorrectAttemptsException, AttemptsAreNotSetException {
         if (attempts.isEmpty()) {
             throw new AttemptsAreNotSetException();
         } else {
@@ -45,7 +47,7 @@ public class HangmanGameSettingsInputValidatorImpl implements HangmanGameSetting
 
             int attemptCount = Integer.parseInt(attempts);
 
-            if (attemptCount < 1 || attemptCount > 26) {
+            if (attemptCount < 1 || attemptCount > TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN) {
                 throw new IncorrectAttemptsException("Attempts must be between 1 and 26");
             }
         }

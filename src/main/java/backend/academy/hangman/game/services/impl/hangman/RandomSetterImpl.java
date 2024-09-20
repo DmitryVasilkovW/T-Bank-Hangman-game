@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class RandomSetterImpl implements RandomSetter {
     private final Random random = new Random();
+    private static final int MIN_ATTEMPTS = 6;
+    private static final int ATTEMPT_RANGE = 21;
 
     @Override
     public String getRandomCategory(Set<String> categories) {
@@ -23,6 +25,6 @@ public class RandomSetterImpl implements RandomSetter {
 
     @Override
     public int getRandomAttemptsBetweenSixAndTwentySix() {
-        return random.nextInt(21) + 6;
+        return random.nextInt(ATTEMPT_RANGE) + MIN_ATTEMPTS;
     }
 }

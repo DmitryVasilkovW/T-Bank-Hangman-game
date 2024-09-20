@@ -11,6 +11,7 @@ import java.util.Set;
 
 public class WordMetaLoader {
     private static final String BASE_PATH = "words/";
+    private static final String FILE_EXTENSION = ".txt";
 
     private final Map<String, Set<String>> categoryDifficultyMap = new HashMap<>();
 
@@ -26,8 +27,8 @@ public class WordMetaLoader {
             .filter(Files::isRegularFile)
             .forEach(file -> {
                 String fileName = file.getFileName().toString();
-                if (fileName.endsWith(".txt")) {
-                    String[] parts = fileName.replace(".txt", "").split("_");
+                if (fileName.endsWith(FILE_EXTENSION)) {
+                    String[] parts = fileName.replace(FILE_EXTENSION, "").split("_");
 
                     if (parts.length == 2) {
                         String category = parts[0];

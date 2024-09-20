@@ -1,7 +1,5 @@
 package backend.academy;
 
-import java.io.IOException;
-import java.util.Set;
 import backend.academy.hangman.game.myExceptions.AttemptsAreNotSetException;
 import backend.academy.hangman.game.myExceptions.CategoryIsNotSetException;
 import backend.academy.hangman.game.myExceptions.DifficultyIsNotSetException;
@@ -18,7 +16,10 @@ import backend.academy.hangman.game.services.impl.io.ScannerCLIReaderImlp;
 import backend.academy.hangman.game.services.impl.text.StringLowerCaseConverterImpl;
 import backend.academy.hangman.game.services.impl.text.WordMetaLoader;
 import backend.academy.hangman.game.services.impl.text.WordStorage;
+import java.io.IOException;
+import java.util.Set;
 import lombok.experimental.UtilityClass;
+
 
 
 @UtilityClass
@@ -29,6 +30,8 @@ public class Main {
     private static final ScannerCLIReaderImlp READER = new ScannerCLIReaderImlp();
     private static final RandomSetterImpl RANDOM_SETTER = new RandomSetterImpl();
     private static final StringLowerCaseConverterImpl CONVERTER = new StringLowerCaseConverterImpl();
+    private static final String WORDS_OF_FAILURE = "Something went wrong";
+    private static final int DEFAULT_AMOUNT_OF_ATTEMPTS = 6;
 
     public static void main(String[] args) {
         WordMetaLoader loader;
@@ -36,7 +39,7 @@ public class Main {
         try {
             loader = new WordMetaLoader();
         } catch (Exception e) {
-            PRINTER.println("Something went wrong");
+            PRINTER.println(WORDS_OF_FAILURE);
             return;
         }
 
@@ -59,7 +62,7 @@ public class Main {
 
             game.play();
         } catch (HintNotFoundException | IOException e) {
-            PRINTER.println("Something went wrong");
+            PRINTER.println(WORDS_OF_FAILURE);
         }
     }
 
@@ -112,7 +115,7 @@ public class Main {
     }
 
     private static int getAttempts() {
-        int attempts = 6;
+        int attempts = DEFAULT_AMOUNT_OF_ATTEMPTS;
         boolean isValid = false;
 
         while (!isValid) {

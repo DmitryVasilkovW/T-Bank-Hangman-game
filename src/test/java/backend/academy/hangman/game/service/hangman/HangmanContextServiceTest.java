@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,7 +35,13 @@ public class HangmanContextServiceTest {
 
         Word expectedWord = makeWord("test");
         Word guessedLetters = makeWord("te");
-        gameContext = new HangmanGameContext(5, expectedWord, new Hangman(new char[28]), guessedLetters, makeWord(""));
+        gameContext = new HangmanGameContext(
+                5,
+                expectedWord,
+                new Hangman(new char[28]),
+                guessedLetters,
+                makeWord("")
+        );
     }
 
     @Test
@@ -67,34 +75,46 @@ public class HangmanContextServiceTest {
 
     @Test
     void shouldReturnTrueWhenWordIsGuessed() {
-        var contextWithFullWord = new HangmanGameContext(5, makeWord("test"), new Hangman(new char[28]), makeWord("test"), makeWord(""));
+        var contextWithFullWord = new HangmanGameContext(
+                5,
+                makeWord("test"),
+                new Hangman(new char[28]),
+                makeWord("test"),
+                makeWord("")
+        );
 
         boolean isWordGuessed = hangmanContextService.isWordGuessed(contextWithFullWord);
 
-        assertThat(isWordGuessed).isTrue();
+        assertTrue(isWordGuessed);
     }
 
     @Test
     void shouldReturnFalseWhenWordIsNotGuessed() {
         boolean isWordGuessed = hangmanContextService.isWordGuessed(gameContext);
 
-        assertThat(isWordGuessed).isFalse();
+        assertFalse(isWordGuessed);
     }
 
     @Test
     void shouldReturnTrueIfAttemptsRemain() {
         boolean hasAttempt = hangmanContextService.hasAttempt(gameContext);
 
-        assertThat(hasAttempt).isTrue();
+        assertTrue(hasAttempt);
     }
 
     @Test
     void shouldReturnFalseIfNoAttemptsRemain() {
-        var contextWithNoAttempts = new HangmanGameContext(0, gameContext.expectedWord(), gameContext.hangman(), gameContext.guessedLetters(), makeWord(""));
+        var contextWithNoAttempts = new HangmanGameContext(
+                0,
+                gameContext.expectedWord(),
+                gameContext.hangman(),
+                gameContext.guessedLetters(),
+                makeWord("")
+        );
 
         boolean hasAttempt = hangmanContextService.hasAttempt(contextWithNoAttempts);
 
-        assertThat(hasAttempt).isFalse();
+        assertFalse(hasAttempt);
     }
 
     private Word makeWord(String string) {

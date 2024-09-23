@@ -10,17 +10,19 @@ import backend.academy.hangman.game.service.text.StringHangmanGameContextRender;
 import backend.academy.hangman.game.service.io.StringPrinter;
 import backend.academy.hangman.game.service.io.StringReader;
 import backend.academy.hangman.game.service.hangman.impl.HangmanGameServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class HangmanGameServiceTest {
 
     @Mock
@@ -41,32 +43,17 @@ public class HangmanGameServiceTest {
     @Mock
     private HangmanGameInputConverter inputConverter;
 
+    @Spy
+    private HangmanGameContext context = new HangmanGameContext(
+            5,
+            new Word(new char[3]),
+            new Hangman(new char[3]),
+            new Word(new char[3]),
+            new Word(new char[3])
+    );
+
     @InjectMocks
     private HangmanGameServiceImpl hangmanGameService;
-
-    private HangmanGameContext context;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        context = new HangmanGameContext(
-                5,
-                makeWord("hello"),
-                new Hangman(new char[28]),
-                makeWord(""),
-                makeWord("")
-        );
-
-        hangmanGameService = new HangmanGameServiceImpl(
-                context,
-                reader,
-                contextService,
-                stringPrinter,
-                render,
-                inputConverter,
-                inputValidator
-        );
-    }
 
     @Test
     void testMoveWhenInputIsCorrectAndWordIsGuessed() {
@@ -104,9 +91,11 @@ public class HangmanGameServiceTest {
     @Test
     void testMoveWhenNoAttemptsLeft() {
         when(contextService.hasAttempt(context)).thenReturn(false);
+        when(render.renderAttempts(context)).thenReturn("Your attempts: 1");
 
         hangmanGameService.play();
 
+        verify(render).renderAttempts(context);
         verify(stringPrinter).println("\nYou lost :(\n");
     }
 
@@ -125,9 +114,5 @@ public class HangmanGameServiceTest {
         verify(stringPrinter).println("enter only one letter");
         verify(contextService, never()).decreaseAttempts(context);
         verify(contextService).updateGuessedLetters(any(), any());
-    }
-
-    private Word makeWord(String string) {
-        return new Word(string.toCharArray());
     }
 }

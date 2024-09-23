@@ -2,9 +2,9 @@ package backend.academy.hangman.game.service.io.impl;
 
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.model.Word;
+import backend.academy.hangman.game.service.io.CharacterInputValidator;
 import backend.academy.hangman.game.service.io.HangmanGameInputValidator;
 import backend.academy.hangman.game.service.io.StringInputValidator;
-import backend.academy.hangman.game.service.io.CharacterInputValidator;
 
 public class HangmanGameInputValidatorImpl implements HangmanGameInputValidator {
 

@@ -3,12 +3,12 @@ package backend.academy.hangman.game.service.hangman.impl;
 import backend.academy.hangman.game.model.HangmanGameContext;
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.service.hangman.HangmanContextService;
+import backend.academy.hangman.game.service.hangman.HangmanGameService;
 import backend.academy.hangman.game.service.io.HangmanGameInputConverter;
 import backend.academy.hangman.game.service.io.HangmanGameInputValidator;
-import backend.academy.hangman.game.service.hangman.HangmanGameService;
-import backend.academy.hangman.game.service.text.StringHangmanGameContextRender;
 import backend.academy.hangman.game.service.io.StringPrinter;
 import backend.academy.hangman.game.service.io.StringReader;
+import backend.academy.hangman.game.service.text.StringHangmanGameContextRender;
 
 
 public class HangmanGameServiceImpl implements HangmanGameService {

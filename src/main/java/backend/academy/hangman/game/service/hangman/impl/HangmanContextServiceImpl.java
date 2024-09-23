@@ -3,9 +3,9 @@ package backend.academy.hangman.game.service.hangman.impl;
 import backend.academy.hangman.game.model.HangmanGameContext;
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.model.Word;
-import backend.academy.hangman.game.service.text.GuessedLettersService;
 import backend.academy.hangman.game.service.hangman.HangmanContextService;
 import backend.academy.hangman.game.service.hangman.HangmanStateService;
+import backend.academy.hangman.game.service.text.GuessedLettersService;
 import backend.academy.hangman.game.service.text.impl.WordIterator;
 
 public class HangmanContextServiceImpl implements HangmanContextService {

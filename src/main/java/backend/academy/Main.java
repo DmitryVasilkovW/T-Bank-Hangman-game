@@ -9,6 +9,7 @@ import backend.academy.hangman.game.exception.IncorrectCategoryException;
 import backend.academy.hangman.game.exception.IncorrectDifficultyException;
 import backend.academy.hangman.game.service.hangman.HangmanGameSettingsInputValidator;
 import backend.academy.hangman.game.service.hangman.impl.CLIHangmanGameFactoryImpl;
+import backend.academy.hangman.game.service.hangman.impl.HangmanContextFactoryImpl;
 import backend.academy.hangman.game.service.hangman.impl.HangmanGameSettingsInputValidatorImpl;
 import backend.academy.hangman.game.service.hangman.impl.RandomSetterImpl;
 import backend.academy.hangman.game.service.io.impl.CLIStringPrinterImpl;
@@ -58,7 +59,8 @@ public class Main {
             PRINTER.println("The word has been chosen, let the game begin!\n");
             PRINTER.println("Category is " + category + " of " + difficulty + " complexity");
             PRINTER.println("Enter 1 to get hint");
-            var game = new CLIHangmanGameFactoryImpl().createHangmanGame(attempts, word, hint);
+            var game = new CLIHangmanGameFactoryImpl(new HangmanContextFactoryImpl())
+                    .createHangmanGame(attempts, word, hint);
 
             game.play();
         } catch (HintNotFoundException | IOException e) {

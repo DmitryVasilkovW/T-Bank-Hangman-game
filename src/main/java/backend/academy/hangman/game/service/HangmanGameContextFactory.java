@@ -1,0 +1,7 @@
+package backend.academy.hangman.game.service;
+
+import backend.academy.hangman.game.model.HangmanGameContext;
+
+public interface HangmanGameContextFactory {
+    HangmanGameContext createHangmanGameContext(int attempts, String expectedWord, String hint);
+}

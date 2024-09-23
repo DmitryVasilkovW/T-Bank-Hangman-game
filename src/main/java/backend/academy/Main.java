@@ -13,7 +13,7 @@ import backend.academy.hangman.game.service.hangman.impl.HangmanGameSettingsInpu
 import backend.academy.hangman.game.service.hangman.impl.RandomSetterImpl;
 import backend.academy.hangman.game.service.io.impl.CLIStringPrinterImpl;
 import backend.academy.hangman.game.service.io.impl.ScannerCLIReaderImlp;
-import backend.academy.hangman.game.service.text.impl.StringLowerCaseConverterImpl;
+import backend.academy.hangman.game.service.text.impl.InputLowerCaseConverterImpl;
 import backend.academy.hangman.game.service.text.impl.WordMetaLoader;
 import backend.academy.hangman.game.service.text.impl.WordStorage;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class Main {
     private static final CLIStringPrinterImpl PRINTER = new CLIStringPrinterImpl();
     private static final ScannerCLIReaderImlp READER = new ScannerCLIReaderImlp();
     private static final RandomSetterImpl RANDOM_SETTER = new RandomSetterImpl();
-    private static final StringLowerCaseConverterImpl CONVERTER = new StringLowerCaseConverterImpl();
+    private static final InputLowerCaseConverterImpl CONVERTER = new InputLowerCaseConverterImpl();
     private static final String WORDS_OF_FAILURE = "Something went wrong";
     private static final int DEFAULT_AMOUNT_OF_ATTEMPTS = 6;
 

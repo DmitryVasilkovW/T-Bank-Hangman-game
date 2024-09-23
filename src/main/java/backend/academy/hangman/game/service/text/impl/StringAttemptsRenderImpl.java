@@ -8,8 +8,7 @@ public class StringAttemptsRenderImpl implements StringRender {
 
     @Override
     public String render(Renderable renderable) {
-
-        return "your attempts: " +
-                ((HangmanGameContext) renderable).attempts();
+        return "your attempts: "
+                + ((HangmanGameContext) renderable).attempts();
     }
 }

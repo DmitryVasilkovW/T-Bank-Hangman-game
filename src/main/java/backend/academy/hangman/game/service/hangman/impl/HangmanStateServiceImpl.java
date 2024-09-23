@@ -14,9 +14,7 @@ public class HangmanStateServiceImpl implements HangmanStateService {
     private static final int HEAD_INDEX = 21;
     private static final int BODY_INDEX = 22;
     private static final int ARM_LEFT_INDEX = 23;
-    private static final int ARM_RIGHT_INDEX = 24;
     private static final int LEG_LEFT_INDEX = 25;
-    private static final int LEG_RIGHT_INDEX = 26;
 
     private static final int DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX = 1;
 
@@ -41,33 +39,17 @@ public class HangmanStateServiceImpl implements HangmanStateService {
         } else if (mistakes <= MAX_LIMB_PARTS) {
             hangmanState[mistakes - 1] = '-';
         } else {
-            switch (mistakes) {
-                case STAND_INDEX:
-                    hangmanState[STAND_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '|';
-                    break;
-                case HEAD_INDEX:
-                    hangmanState[HEAD_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = 'O';
-                    break;
-                case BODY_INDEX:
-                    hangmanState[BODY_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '|';
-                    break;
-                case ARM_LEFT_INDEX:
-                    hangmanState[ARM_LEFT_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '/';
-                    break;
-                case ARM_RIGHT_INDEX:
-                    hangmanState[ARM_RIGHT_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '\\';
-                    break;
-                case LEG_LEFT_INDEX:
-                    hangmanState[LEG_LEFT_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '/';
-                    break;
-                default:
-                    hangmanState[LEG_RIGHT_INDEX - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = '\\';
-                    break;
-            }
+            hangmanState[mistakes - DIFFERENCE_BETWEEN_ATTEMPT_AND_INDEX] = switch (mistakes) {
+                case STAND_INDEX, BODY_INDEX -> '|';
+                case HEAD_INDEX -> 'O';
+                case ARM_LEFT_INDEX, LEG_LEFT_INDEX -> '/';
+                default -> '\\';
+            };
         }
 
         return updateContext(context, hangmanState);
     }
+
 
     private HangmanGameContext updateContext(HangmanGameContext context, char[] hangmanState) {
         return new HangmanGameContext(

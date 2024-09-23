@@ -11,4 +11,9 @@ public class InputLowerCaseConverterImpl implements InputConverter {
 
         return new Input(Character.toLowerCase(letter));
     }
+
+    @Override
+    public String convert(String input) {
+        return input.toLowerCase();
+    }
 }

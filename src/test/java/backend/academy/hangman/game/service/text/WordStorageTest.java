@@ -1,7 +1,7 @@
 package backend.academy.hangman.game.service.text;
 
 import backend.academy.hangman.game.exception.HintNotFoundException;
-import backend.academy.hangman.game.service.impl.text.WordStorage;
+import backend.academy.hangman.game.service.text.impl.WordStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

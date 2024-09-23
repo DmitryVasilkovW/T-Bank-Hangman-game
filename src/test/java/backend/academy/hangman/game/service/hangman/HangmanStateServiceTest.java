@@ -3,7 +3,7 @@ package backend.academy.hangman.game.service.hangman;
 import backend.academy.hangman.game.model.Hangman;
 import backend.academy.hangman.game.model.HangmanGameContext;
 import backend.academy.hangman.game.model.Word;
-import backend.academy.hangman.game.service.impl.hangman.HangmanStateServiceImpl;
+import backend.academy.hangman.game.service.hangman.impl.HangmanStateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

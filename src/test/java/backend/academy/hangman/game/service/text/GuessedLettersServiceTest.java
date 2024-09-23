@@ -2,8 +2,7 @@ package backend.academy.hangman.game.service.text;
 
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.model.Word;
-import backend.academy.hangman.game.service.GuessedLettersService;
-import backend.academy.hangman.game.service.impl.text.GuessedLettersServiceImpl;
+import backend.academy.hangman.game.service.text.impl.GuessedLettersServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

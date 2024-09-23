@@ -6,7 +6,7 @@ import backend.academy.hangman.game.exception.DifficultyIsNotSetException;
 import backend.academy.hangman.game.exception.IncorrectAttemptsException;
 import backend.academy.hangman.game.exception.IncorrectCategoryException;
 import backend.academy.hangman.game.exception.IncorrectDifficultyException;
-import backend.academy.hangman.game.service.impl.hangman.HangmanGameSettingsInputValidatorImpl;
+import backend.academy.hangman.game.service.hangman.impl.HangmanGameSettingsInputValidatorImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Set;

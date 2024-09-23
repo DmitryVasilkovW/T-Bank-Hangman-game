@@ -1,6 +1,6 @@
 package backend.academy.hangman.game.service.text;
 
-import backend.academy.hangman.game.service.impl.text.WordMetaLoader;
+import backend.academy.hangman.game.service.text.impl.WordMetaLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -7,23 +7,15 @@ import backend.academy.hangman.game.exception.IncorrectAttemptsException;
 import backend.academy.hangman.game.exception.IncorrectCategoryException;
 import backend.academy.hangman.game.exception.IncorrectDifficultyException;
 import backend.academy.hangman.game.service.hangman.impl.HangmanGameSettingsInputValidatorImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Set;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class HangmanGameSettingsInputValidatorTest {
-    private HangmanGameSettingsInputValidatorImpl validator;
-    private Set<String> validCategories;
-    private Set<String> difficulties;
-
-    @BeforeEach
-    void setUp() {
-        validator = new HangmanGameSettingsInputValidatorImpl();
-        validCategories = Set.of("animals", "fruits");
-        difficulties = Set.of("easy", "medium", "hard");
-    }
+    private final HangmanGameSettingsInputValidatorImpl validator = new HangmanGameSettingsInputValidatorImpl();;
+    private final Set<String> validCategories = Set.of("animals", "fruits");;
+    private final Set<String> difficulties = Set.of("easy", "medium", "hard");;
 
     @Test
     void validateCategoryWhenCategoryIsEmptyThenThrowCategoryIsNotSetException() {

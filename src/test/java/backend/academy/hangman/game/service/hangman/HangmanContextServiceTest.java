@@ -6,17 +6,19 @@ import backend.academy.hangman.game.model.Word;
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.service.text.GuessedLettersService;
 import backend.academy.hangman.game.service.hangman.impl.HangmanContextServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class HangmanContextServiceTest {
     @Mock
     private HangmanStateService hangmanStateService;
@@ -24,25 +26,20 @@ public class HangmanContextServiceTest {
     @Mock
     private GuessedLettersService guessedLettersService;
 
+    private final Word expectedWord = makeWord("test");
+    private final Word guessedLetters = makeWord("te");
+
     @InjectMocks
     private HangmanContextServiceImpl hangmanContextService;
 
-    private HangmanGameContext gameContext;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-        Word expectedWord = makeWord("test");
-        Word guessedLetters = makeWord("te");
-        gameContext = new HangmanGameContext(
-                5,
-                expectedWord,
-                new Hangman(new char[28]),
-                guessedLetters,
-                makeWord("")
-        );
-    }
+    @Spy
+    private final HangmanGameContext gameContext = new HangmanGameContext(
+            5,
+            expectedWord,
+            new Hangman(new char[28]),
+            guessedLetters,
+            makeWord("")
+    );
 
     @Test
     void shouldDecreaseAttempts() {

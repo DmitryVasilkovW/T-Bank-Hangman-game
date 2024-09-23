@@ -3,17 +3,11 @@ package backend.academy.hangman.game.service.io;
 import backend.academy.hangman.game.model.Input;
 import backend.academy.hangman.game.model.Word;
 import backend.academy.hangman.game.service.io.impl.CharacterInputValidatorImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CharacterInputValidatorTest {
-    private CharacterInputValidatorImpl validator;
-
-    @BeforeEach
-    void setUp() {
-        validator = new CharacterInputValidatorImpl();
-    }
+    private final CharacterInputValidatorImpl validator = new CharacterInputValidatorImpl();;
 
     @Test
     void testHasInputAcceptedWhenCharIsInWordThenReturnsTrue() {

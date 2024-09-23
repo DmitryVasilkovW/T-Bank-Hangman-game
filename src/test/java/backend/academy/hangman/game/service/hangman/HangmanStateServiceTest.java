@@ -4,27 +4,21 @@ import backend.academy.hangman.game.model.Hangman;
 import backend.academy.hangman.game.model.HangmanGameContext;
 import backend.academy.hangman.game.model.Word;
 import backend.academy.hangman.game.service.hangman.impl.HangmanStateServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Spy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class HangmanStateServiceTest {
-    private HangmanStateServiceImpl hangmanStateService;
-    private HangmanGameContext context;
+    private final HangmanStateServiceImpl hangmanStateService = new HangmanStateServiceImpl();
 
-    @BeforeEach
-    void setUp() {
-        var initialHangmanState = new char[28];
-        context = new HangmanGameContext(
-                5,
-                makeWord("test1"),
-                new Hangman(initialHangmanState),
-                makeWord(""),
-                makeWord("")
-        );
-
-        hangmanStateService = new HangmanStateServiceImpl();
-    }
+    @Spy
+    private HangmanGameContext context = new HangmanGameContext(
+            5,
+            makeWord("test1"),
+            new Hangman(new char[28]),
+            makeWord(""),
+            makeWord("")
+    );
 
     @Test
     void testAddPartWhenMistakesLessThan10ThenEqualsAdded() {

@@ -15,7 +15,13 @@ public class HangmanStateServiceTest {
     @BeforeEach
     void setUp() {
         var initialHangmanState = new char[28];
-        context = new HangmanGameContext(5, makeWord("test1"), new Hangman(initialHangmanState), makeWord(""), makeWord(""));
+        context = new HangmanGameContext(
+                5,
+                makeWord("test1"),
+                new Hangman(initialHangmanState),
+                makeWord(""),
+                makeWord("")
+        );
 
         hangmanStateService = new HangmanStateServiceImpl();
     }

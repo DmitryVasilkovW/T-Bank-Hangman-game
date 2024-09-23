@@ -10,7 +10,6 @@ import backend.academy.hangman.game.service.io.StringPrinter;
 import backend.academy.hangman.game.service.io.StringReader;
 import backend.academy.hangman.game.service.text.StringHangmanGameContextRender;
 
-
 public class HangmanGameServiceImpl implements HangmanGameService {
 
     private HangmanGameContext context;

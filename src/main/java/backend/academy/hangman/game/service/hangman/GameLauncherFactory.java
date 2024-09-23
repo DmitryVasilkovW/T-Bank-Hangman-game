@@ -1,7 +1,7 @@
 package backend.academy.hangman.game.service.hangman;
 
-import backend.academy.hangman.game.service.hangman.impl.GameLauncher;
+import backend.academy.hangman.game.service.hangman.impl.HangmanGameLauncher;
 
 public interface GameLauncherFactory {
-    GameLauncher createGameLauncher();
+    HangmanGameLauncher createGameLauncher();
 }

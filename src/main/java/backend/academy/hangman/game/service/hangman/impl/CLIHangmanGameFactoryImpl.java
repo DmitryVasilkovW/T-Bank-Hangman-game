@@ -19,7 +19,6 @@ import backend.academy.hangman.game.service.text.impl.StringHangmanRenderImpl;
 import backend.academy.hangman.game.service.text.impl.StringHintRenderImpl;
 import backend.academy.hangman.game.service.text.impl.StringInputConverterImpl;
 
-
 public class CLIHangmanGameFactoryImpl implements HangmanGameFactory {
 
     private final static int TOTAL_NUMBER_OF_PARTS_OF_FULLY_HANGMAN = 26;

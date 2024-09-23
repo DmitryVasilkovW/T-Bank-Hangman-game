@@ -17,7 +17,7 @@ import backend.academy.hangman.game.service.text.impl.WordStorage;
 import java.io.IOException;
 import java.util.Set;
 
-public class GameLauncher {
+public class HangmanGameLauncher {
 
     private final HangmanGameSettingsInputValidator validator;
     private final StringPrinter printer;
@@ -27,7 +27,7 @@ public class GameLauncher {
     private static final String WORDS_OF_FAILURE = "Something went wrong";
     private static final int DEFAULT_AMOUNT_OF_ATTEMPTS = 6;
 
-    public GameLauncher(
+    public HangmanGameLauncher(
             HangmanGameSettingsInputValidator validator,
             StringPrinter printer,
             StringReader reader,

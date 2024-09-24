@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class WordMetaLoaderTest {
@@ -39,8 +40,8 @@ public class WordMetaLoaderTest {
         Set<String> expectedDifficulties = Set.of("hard", "medium", "easy");
 
         assertThat(wordMetaLoader.getCategoriesAsSet()).contains("animals");
-        assertThat(wordMetaLoader.getDifficultiesAsSet("animals")).isEqualTo(expectedDifficulties);
+        assertEquals(wordMetaLoader.getDifficultiesAsSet("animals"), expectedDifficulties);
         assertThat(wordMetaLoader.getCategoriesAsString()).contains("animals");
-        assertThat(wordMetaLoader.getDifficultiesAsString("animals")).isEqualTo("hard, medium, easy");
+        assertEquals(wordMetaLoader.getDifficultiesAsString("animals"),"hard, medium, easy");
     }
 }

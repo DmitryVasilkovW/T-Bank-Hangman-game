@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CharacterInputValidatorTest {
     private final CharacterInputValidatorImpl validator = new CharacterInputValidatorImpl();
@@ -33,6 +33,6 @@ public class CharacterInputValidatorTest {
 
         boolean result = validator.hasInputAccepted(input, word);
 
-        assertThat(result).isEqualTo(expected);
+        assertEquals(result, expected);
     }
 }

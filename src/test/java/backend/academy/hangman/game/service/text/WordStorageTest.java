@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -48,7 +49,7 @@ public class WordStorageTest {
     @Test
     void testGetHintForWordWhenHintExistsThenReturnsHint() throws IOException, HintNotFoundException {
         String hint = WordStorage.getHintForWord("cat", "category", "difficulty");
-        assertThat(hint).isEqualTo("small animal");
+        assertEquals(hint, "small animal");
     }
 
     @Test

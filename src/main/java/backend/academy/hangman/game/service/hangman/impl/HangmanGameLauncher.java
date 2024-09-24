@@ -7,6 +7,7 @@ import backend.academy.hangman.game.exception.HintNotFoundException;
 import backend.academy.hangman.game.exception.IncorrectAttemptsException;
 import backend.academy.hangman.game.exception.IncorrectCategoryException;
 import backend.academy.hangman.game.exception.IncorrectDifficultyException;
+import backend.academy.hangman.game.service.hangman.HangmanGameContextFactory;
 import backend.academy.hangman.game.service.hangman.HangmanGameSettingsInputValidator;
 import backend.academy.hangman.game.service.hangman.RandomSetter;
 import backend.academy.hangman.game.service.io.StringPrinter;
@@ -24,6 +25,7 @@ public class HangmanGameLauncher {
     private final StringReader reader;
     private final RandomSetter randomSetter;
     private final InputConverter converter;
+    private final HangmanGameContextFactory contextFactory;
     private static final String WORDS_OF_FAILURE = "Something went wrong";
     private static final int DEFAULT_AMOUNT_OF_ATTEMPTS = 6;
 
@@ -32,13 +34,15 @@ public class HangmanGameLauncher {
             StringPrinter printer,
             StringReader reader,
             RandomSetter randomSetter,
-            InputConverter converter
+            InputConverter converter,
+            HangmanGameContextFactory contextFactory
     ) {
         this.validator = validator;
         this.printer = printer;
         this.reader = reader;
         this.randomSetter = randomSetter;
         this.converter = converter;
+        this.contextFactory = contextFactory;
     }
 
     public void launchGame() {
@@ -66,7 +70,7 @@ public class HangmanGameLauncher {
             printer.println("The word has been chosen, let the game begin!\n");
             printer.println("Category is " + category + " of " + difficulty + " complexity");
             printer.println("Enter 1 to get hint");
-            var game = new CLIHangmanGameFactoryImpl(new HangmanContextFactoryImpl())
+            var game = new CLIHangmanGameFactoryImpl(contextFactory)
                     .createHangmanGame(attempts, word, hint);
 
             game.play();

@@ -12,8 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,9 +30,6 @@ public class HangmanContextServiceTest {
     private final Word expectedWord = makeWord("test");
     private final Word guessedLetters = makeWord("te");
 
-    @InjectMocks
-    private HangmanContextServiceImpl hangmanContextService;
-
     @Spy
     private final HangmanGameContext gameContext = new HangmanGameContext(
             5,
@@ -41,11 +39,14 @@ public class HangmanContextServiceTest {
             makeWord("")
     );
 
+    @InjectMocks
+    private HangmanContextServiceImpl hangmanContextService;
+
     @Test
     void shouldDecreaseAttempts() {
         HangmanGameContext updatedContext = hangmanContextService.decreaseAttempts(gameContext);
 
-        assertThat(updatedContext.attempts()).isEqualTo(4);
+        assertEquals(updatedContext.attempts(), 4);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class HangmanContextServiceTest {
         HangmanGameContext updatedContext = hangmanContextService.addNewPartOfHangman(gameContext);
 
         verify(hangmanStateService).addPart(gameContext);
-        assertThat(updatedContext.hangman().hangman()).isNotNull();
+        assertNotNull(updatedContext.hangman().hangman());
     }
 
     @Test
@@ -66,7 +67,7 @@ public class HangmanContextServiceTest {
 
         HangmanGameContext updatedContext = hangmanContextService.updateGuessedLetters(gameContext, input);
 
-        assertThat(updatedContext.guessedLetters()).isEqualTo(updatedWord);
+        assertEquals(updatedContext.guessedLetters(), updatedWord);
         verify(guessedLettersService).updateWord(gameContext.guessedLetters(), input);
     }
 

@@ -6,10 +6,9 @@ import backend.academy.hangman.game.model.Word;
 import backend.academy.hangman.game.service.hangman.impl.HangmanStateServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class HangmanStateServiceTest {
-    private final HangmanStateServiceImpl hangmanStateService = new HangmanStateServiceImpl();
 
     @Spy
     private HangmanGameContext context = new HangmanGameContext(
@@ -20,6 +19,8 @@ public class HangmanStateServiceTest {
             makeWord("")
     );
 
+    private final HangmanStateServiceImpl hangmanStateService = new HangmanStateServiceImpl();
+
     @Test
     void testAddPartWhenMistakesLessThan10ThenEqualsAdded() {
         setUpPartsFrom0To(9);
@@ -27,7 +28,7 @@ public class HangmanStateServiceTest {
         char[] expectedHangmanState = new char[28];
         expectedHangmanState = setUpExpectedStateFromToAndWithChar(expectedHangmanState, 0, 9, '=');
 
-        assertThat(context.hangman().hangman()).isEqualTo(expectedHangmanState);
+        assertArrayEquals(context.hangman().hangman(), expectedHangmanState);
     }
 
     @Test
@@ -38,7 +39,7 @@ public class HangmanStateServiceTest {
         expectedHangmanState = setUpExpectedStateFromToAndWithChar(expectedHangmanState, 0, 9, '=');
         expectedHangmanState = setUpExpectedStateFromToAndWithChar(expectedHangmanState, 9, 15, '|');
 
-        assertThat(context.hangman().hangman()).isEqualTo(expectedHangmanState);
+        assertArrayEquals(context.hangman().hangman(), expectedHangmanState);
     }
 
     @Test
@@ -50,7 +51,7 @@ public class HangmanStateServiceTest {
         expectedHangmanState = setUpExpectedStateFromToAndWithChar(expectedHangmanState, 9, 15, '|');
         expectedHangmanState = setUpExpectedStateFromToAndWithChar(expectedHangmanState, 15, 19, '-');
 
-        assertThat(context.hangman().hangman()).isEqualTo(expectedHangmanState);
+        assertArrayEquals(context.hangman().hangman(), expectedHangmanState);
     }
 
     @Test
@@ -69,7 +70,7 @@ public class HangmanStateServiceTest {
         expectedHangmanState[24] = '/';
         expectedHangmanState[25] = '\\';
 
-        assertThat(context.hangman().hangman()).isEqualTo(expectedHangmanState);
+        assertArrayEquals(context.hangman().hangman(), expectedHangmanState);
     }
 
     private Word makeWord(String string) {

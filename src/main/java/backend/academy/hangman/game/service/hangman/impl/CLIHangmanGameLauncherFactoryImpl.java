@@ -14,7 +14,8 @@ public class CLIHangmanGameLauncherFactoryImpl implements GameLauncherFactory {
         var reader = new ScannerCLIReaderImlp();
         var randomSetter = new RandomSetterImpl();
         var converter = new InputLowerCaseConverterImpl();
+        var contextFactory = new HangmanContextFactoryImpl();
 
-        return new HangmanGameLauncher(validator, printer, reader, randomSetter, converter);
+        return new HangmanGameLauncher(validator, printer, reader, randomSetter, converter, contextFactory);
     }
 }

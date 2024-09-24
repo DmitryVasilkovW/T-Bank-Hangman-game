@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import static backend.academy.hangman.game.service.text.impl.WordSourceProperties.FILE_EXTENSION;
+import static backend.academy.hangman.game.service.text.impl.WordSourceProperties.SEPARATOR_IN_FILENAME;
+import static backend.academy.hangman.game.service.text.impl.WordSourceProperties.SEPARATOR_IN_FILES;
 
 public final class WordStorage {
-
-    private static final String FILE_EXTENSION = ".txt";
-    private static final String SEPARATOR_IN_FILENAME = "_";
-    private static final String SEPARATOR_IN_FILES = " - ";
 
     private WordStorage() {
     }

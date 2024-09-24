@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import static backend.academy.hangman.game.service.text.impl.WordSourceProperties.BASE_PATH;
+import static backend.academy.hangman.game.service.text.impl.WordSourceProperties.FILE_EXTENSION;
 
 public class WordMetaLoader {
-    private static final String BASE_PATH = "words/";
-    private static final String FILE_EXTENSION = ".txt";
 
     private final Map<String, Set<String>> categoryDifficultyMap = new HashMap<>();
 
